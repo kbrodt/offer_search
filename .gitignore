@@ -1,0 +1,16 @@
+# ignore data
+*.xlsx
+
+# ignore file from draw.io
+*.xml
+
+
+# ignore all latex waste
+*.aux
+*.log
+*.nav
+*.out
+*.snm
+*.gz
+*.tex
+*.toc
