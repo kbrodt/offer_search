@@ -6,6 +6,7 @@
 
 
 # ignore all latex waste
+imgs
 *.aux
 *.log
 *.nav
