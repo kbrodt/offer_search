@@ -1,6 +1,3 @@
-# ignore data
-*.xlsx
-
 # ignore file from draw.io
 *.xml
 
