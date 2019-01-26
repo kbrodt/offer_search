@@ -65,7 +65,7 @@
 Для парсинга на **python**'е:
 
 - [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)
-- [Scrypy](https://scrapy.org)
+- [Scrapy](https://scrapy.org)
 
 Для **slotfilling**'а:
 
