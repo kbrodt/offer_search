@@ -12,3 +12,27 @@ imgs
 *.gz
 *.tex
 *.toc
+
+# macOS
+.DS_Store
+
+# Python
+
+__pycache__/
+*.pyc
+
+*.egg-info/
+
+.venv/
+.venv-*/
+venv/
+venv-*/
+
+.ipynb_checkpoints/
+
+# Text Editors / IDEs
+
+.vscode/
+
+.idea/
+
