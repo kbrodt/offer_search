@@ -1,6 +1,6 @@
 # Поиск по спецпредложениям
 
-В мобильном приложении *Тинькофф* есть спецпредложения со скидками и хочется находить по *нетривиальному* запросу самые *лучшие*.
+В мобильном приложении *Тинькофф* есть спецпредложения со скидками, и хочется находить по *нетривиальному* запросу самые *лучшие*.
 Например, по запросу *где купить хороший велосипед со скидкой 30% кешбэка и до 60к* выдать наилучшее спецпредложение (см. [короткую презентацию](./presentation/presentation.pdf)).
 
 ## Данные
@@ -9,7 +9,7 @@
 и [`offers_with_categories`](./data/offers_with_categories.xlsx). В файле [`current_offers`](./data/current_offers.xlsx)
 содержаться данные по спецпредложениям (на 23 января 2019 года) со следующими полями:
 
-- **NAME** - название организации предоставляющее спецпредложение
+- **NAME** - название организации, предоставляющее спецпредложение
 - **WEB** - веб-сайт организации
 - **CASH_BACK_HEIGHT** - кешбэк в процентах (если значение больше 100, то в рублях)
 - **TRANCHE_STMT_COUNT** - длина рассрочки в месяцах
@@ -19,7 +19,7 @@
 В файле [`offers_with_categories`](./data/offers_with_categories.xlsx):
 
 - **OFFER_ID** - идентификационный номер спецпредложения
-- **NAME** - название организации предоставляющее спецпредложение
+- **NAME** - название организации, предоставляющее спецпредложение
 - **CASH_BACK_HEIGHT** - кешбэк в процентах (если значение больше 100, то в рублях)
 - **TRANCHE_STMT_COUNT** - длина рассрочки в месяцах
 - **OFFER_TYPE** - тип спецпредложения (*STANDART* или *SPECIAL_CREDIT*)
@@ -72,7 +72,7 @@
 - [Deeppavlov docs](http://docs.deeppavlov.ai/en/master/components/slot_filling.html)
 - [Dialogflow docs](https://dialogflow.com/docs/concepts/slot-filling)
 
-Для ранжирования про библиотеку [Elasticsearch](https://www.elastic.co).
+Для ранжирования с помощью библиотеки [Elasticsearch](https://www.elastic.co).
 
 - [Elasticsearch tutorial for beginners using Python](https://towardsdatascience.com/elasticsearch-tutorial-for-beginners-using-python-b9cb48edcedc)
 - [Getting started with ElasticSearch-Python :: Part Two](https://medium.com/the-andela-way/getting-started-with-elasticsearch-python-part-two-1c0c9d1117ea)
@@ -109,7 +109,7 @@
 Решили зафиксировать следующие слоты:
 
 - `Item`: наименования товара (велосипед)
-- `Attributes`: аттрибуты (горный, детский, и т. д.)
+- `Attributes`: атрибуты (горный, детский, и т. д.)
 - `Price_[from, to]`: стоимость как интервал от и до
 - ~`installment` (под вопросом): рассрочка~
   - ~`is`: есть или нет~
@@ -120,7 +120,7 @@
 Написаны, но не протестированы слоты на правилах
 
 - `Item`: наименования товара (велосипед)
-- `Attributes`: аттрибуты (горный, детский, и т. д.)
+- `Attributes`: атрибуты (горный, детский, и т. д.)
 - `Price_[from, to]`: стоимость как интервал от и до
 - `Cashback`: значение кешбэка
 
