@@ -79,3 +79,22 @@
 - [Python + Elasticsearch. First steps.](https://tryolabs.com/blog/2015/02/17/python-elasticsearch-first-steps/)
 - [Twitter Sentiment Analysis – Python, Docker, Elasticsearch, Kibana](https://realpython.com/twitter-sentiment-python-docker-elasticsearch-kibana/)
 - [Elastic docs](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html)
+
+## Процесс работы
+
+### День 1. 26.01.2019
+
+Познакомились с командой и задачей. Распределили роли следующим образом:
+
+- Михаил и Артём парсят веб-сайты
+- Алексей занимается классификацией намерений
+- Александр занимается заполнением слотов
+- Елизавета занимается индексацией и ранжированием
+
+Ожидание на следующий день:
+
+- [ ] распарсить один сайт и посмотреть на данные (Михаил и Артём)
+- [ ] решить как генерить данные для классификации и слотфиллинга
+- [ ] накидать пайплайн всего процесса поиска, от запроса до выдачи
+
+### День 2. 27.01.2019
