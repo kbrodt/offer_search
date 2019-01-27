@@ -54,7 +54,7 @@
 
 ## Архитектура
 
-![architecture](./images/offer_search_architecture.png)
+![architecture](./docs/images/offer_search_architecture.png)
 
 - Несколько человек занимаются парсингом веб-сайтов из спецпредложений для сбора данных (*Data*) вида `(НАЗВАНИЕ_ТОВАРА, ОПИСАНИЕ, ДРУГИЕ_АТРИБУТЫ)` для классификации и индексации.
 - Один человек отвечает за часть по обработке естественного языка (*Natural Language Processing (NLP)*), как классификация намерений (*Intent Classification*) и заполнение слотов (*Slotfilling*). 
