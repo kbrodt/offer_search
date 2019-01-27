@@ -9,9 +9,16 @@
 #  GitHub: @ameyuuno
 #
 
-from offer_search.ranking.base import Ranker
+import abc
+import typing as t
 
 
 __all__ = [
     'Ranker',
 ]
+
+
+class Ranker(metaclass=abc.ABCMeta):
+    @abc.abstractmethod
+    def rank(self, search_form: t.Dict[str, t.Any]) -> t.List[t.Dict[str, t.Any]]:
+        pass

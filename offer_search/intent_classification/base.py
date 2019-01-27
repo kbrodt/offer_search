@@ -9,9 +9,15 @@
 #  GitHub: @ameyuuno
 #
 
-from offer_search.intent_classification.base import IntentClassifier
+import abc
 
 
 __all__ = [
     'IntentClassifier',
 ]
+
+
+class IntentClassifier(metaclass=abc.ABCMeta):
+    @abc.abstractmethod
+    def predict(self, text: str) -> str:
+        pass

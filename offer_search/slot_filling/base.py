@@ -9,9 +9,16 @@
 #  GitHub: @ameyuuno
 #
 
-from offer_search.slot_filling.base import SlotFiller
+import abc
+import typing as t
 
 
 __all__ = [
     'SlotFiller',
 ]
+
+
+class SlotFiller(metaclass=abc.ABCMeta):
+    @abc.abstractmethod
+    def fill(self, text: str, intent: str) -> t.Dict[str, t.Any]:
+        pass
