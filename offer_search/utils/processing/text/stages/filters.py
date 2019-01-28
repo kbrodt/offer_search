@@ -17,7 +17,7 @@ from offer_search.utils.processing.text.text_processing_stages import Filter
 
 
 __all__ = [
-    'NltkTokenizer',
+    'CompositeFilter',
 ]
 
 
