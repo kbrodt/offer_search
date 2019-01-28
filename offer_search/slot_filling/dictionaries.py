@@ -16,7 +16,8 @@ class Dictionary(metaclass=abc.ABCMeta):
 class Goods(object):
     def __init__(self, intent):
         self.goods = [
-            "велик"
+            "велик",
+            "велосипед"
         ]
     def __getitem__(self, key):
         return self.goods[int(key)]

@@ -3,11 +3,13 @@ from dictionaries import Goods
 from yargy_rules import *
 from overrides import overrides
 import typing as t
+import pymorphy2 as pmh
 
 goods = []
 
 class SlotFillerWithRules(SlotFiller):
     def __init__(self):
+        self.analyzer = pmh.MorphAnalyzer()
         self.dict = dict()
         self.price_rules = [PRICE_FROM, PRICE_TO]
     def Preprocess(self, string):
@@ -60,7 +62,7 @@ class SlotFillerWithRules(SlotFiller):
                 price = ' '.join([_.value for _ in match.tokens])
                 parsed['Price']["From"] = parsed['Price']["To"] = price
                 for token in match.tokens:
-                    string = string.replace(token.value, "")
+                    string = string.replace(token.value + " ", "")
         
         parser = Parser(ATTRIBUTE)
         attr_tokens = parser.findall(string)
@@ -69,9 +71,10 @@ class SlotFillerWithRules(SlotFiller):
         for match in attr_tokens:
                 attr = ' '.join([_.value for _ in match.tokens])
                 parsed['Attributes'] = attr
+        parsed['Item'] = "NaN"
         for word in words:
             #find Item
-            if(word in self.dict['goods']):
+            if(self.analyzer.parse(word)[0].normal_form in self.dict['goods']):
                 parsed['Item'] = word
                 #while True:
                 #    pass
@@ -81,4 +84,6 @@ class SlotFillerWithRules(SlotFiller):
     def fill(self, text: str, intent: str) -> t.Dict[str, t.Any]:
         self.dict['goods'] = Goods(int(intent))
         processed_string = self.Preprocess(text)
-        return self.Parsing(processed_string)  
+        return self.Parsing(processed_string)
+SF = SlotFillerWithRules()
+print(SF.fill("купить горный велосипед за 50к", "0"))
