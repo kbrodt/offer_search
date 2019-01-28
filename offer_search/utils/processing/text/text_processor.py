@@ -19,11 +19,11 @@ from offer_search.utils.processing.text import text_processing_stages as stages
 
 
 __all__ = [
-    'TextPreprocessor',
+    'TextProcessor',
 ]
 
 
-class TextPreprocessor(Processor[str, t.List[str]]):
+class TextProcessor(Processor[str, t.List[str]]):
     def __init__(
         self,
         tokenizer: stages.Tokenizer = stages.SimpleTokenizer(),
