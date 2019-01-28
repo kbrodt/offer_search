@@ -8,3 +8,10 @@
 #
 #  GitHub: @ameyuuno
 #
+
+from offer_search.utils.processing.text.text_processor import TextProcessor
+
+
+__all__ = [
+    'TextProcessor',
+]
