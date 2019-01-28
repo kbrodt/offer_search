@@ -25,7 +25,7 @@ __all__ = [
 
 class Pymorphy2Normalizer(Normalizer):
     def __init__(self) -> None:
-        self.__morph_analyzer = MorphAnalyzer
+        self.__morph_analyzer = MorphAnalyzer()
 
     @overrides
     def normalize(self, tokens: t.List[str]) -> t.List[str]:
