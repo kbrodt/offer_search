@@ -1,1 +1,11 @@
-overrides==1.9.0
+DAWG-Python==0.7.2
+docopt==0.6.2
+nltk==3.4
+numpy==1.16.0
+overrides==1.9
+pymorphy2==0.8
+pymorphy2-dicts==2.4.393442.3710985
+scikit-learn==0.20.2
+scipy==1.2.0
+singledispatch==3.4.0.3
+six==1.12.0
