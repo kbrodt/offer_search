@@ -1,5 +1,5 @@
 #
-#  Project: Offer Search - Experiments
+#  Project: Offer Search
 #
 #  Course: CompTech2019
 #      Novosibirsk State University
