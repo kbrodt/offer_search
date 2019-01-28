@@ -66,20 +66,27 @@ PRICE_VALUE = rule(
 )
 #поиск атрибутов.
 #Note: в строку атрибутов входит название самого товара
-ATTR_ITEM = rule(
-    and_(
-        gram("ADJF"),
-        not_(
-            gram("PREP")
+MEANING = rule(
+    not_(
+        or_(
+            or_(
+                gram("INFN"),
+                gram("VERB")
+            ),
+            or_(
+                or_(
+                    gram("PREP"), gram("CONJ")
+                ),
+                or_(
+                    gram("PRCL"), gram("ADVB")
+                )
+            )
         )
-    ).optional().repeatable(),
-    gram("NOUN"),
-    and_(
-        gram("ADJF"),
-        not_(
-            gram("PREP")
-        )
-    ).optional().repeatable()
+    )
+)
+ATTRIBUTE = rule(
+    MEANING.optional().repeatable(),
+    gram("NOUN").repeatable()
 )
 #поиск упоминаний процентов или денежных обозначений
 MONEY_PERCENT = rule(
