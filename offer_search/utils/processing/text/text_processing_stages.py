@@ -31,7 +31,7 @@ class Tokenizer(metaclass=abc.ABCMeta):
         pass
 
 
-class SimpleTokenizer(metaclass=abc.ABCMeta):
+class SimpleTokenizer(Tokenizer):
     @overrides
     def split(self, text: str) -> t.List[str]:
         return text.split()
@@ -44,7 +44,7 @@ class Filter(metaclass=abc.ABCMeta):
         return text.split()
 
 
-class SimpleFilter(metaclass=abc.ABCMeta):
+class SimpleFilter(Filter):
     @overrides
     def filter(self, tokens: t.List[str]) -> t.List[str]:
         return tokens
@@ -57,7 +57,7 @@ class Normalizer(metaclass=abc.ABCMeta):
         return tokens
 
 
-class SimpleNormalizer(metaclass=abc.ABCMeta):
+class SimpleNormalizer(Normalizer):
     @overrides
     def normalize(self, tokens: t.List[str]) -> t.List[str]:
         return tokens
