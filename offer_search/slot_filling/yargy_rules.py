@@ -1,6 +1,8 @@
 import yargy
-from yargy import and_, or_, not_
 from yargy.tokenizer import MorphTokenizer
+from yargy import Parser, rule, and_, or_, not_
+from yargy.predicates import gram, dictionary, custom, true
+from yargy.pipelines import morph_pipeline
 
 #проверка на то, число ли это
 def is_number(string):
