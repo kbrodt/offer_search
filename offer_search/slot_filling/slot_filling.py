@@ -1,18 +1,17 @@
 from base import SlotFiller
-import dictionaries as dct
+from dictionaries import Goods
 from yargy_rules import *
-#from overrides import overrides
-import re
+from overrides import overrides
+import typing as t
 
 goods = []
 
-class SlotFillerWithRules:
-    def __init__(self,  intent : int):
+class SlotFillerWithRules(SlotFiller):
+    def __init__(self):
         self.dict = dict()
-        self.dict['goods'] = dct.getGoodsDictionary(intent)
         self.price_rules = [PRICE_FROM, PRICE_TO]
     def Preprocess(self, string):
-        string = string.lowercase()
+        string = string.lower()
         string = " " + string + " "
         return string
     def Parsing(self, string):
@@ -60,6 +59,8 @@ class SlotFillerWithRules:
             for match in price_tokens:
                 price = ' '.join([_.value for _ in match.tokens])
                 parsed['Price']["From"] = parsed['Price']["To"] = price
+                for token in match.tokens:
+                    string = string.replace(token.value, "")
         
         parser = Parser(ATTRIBUTE)
         attr_tokens = parser.findall(string)
@@ -75,11 +76,9 @@ class SlotFillerWithRules:
                 #while True:
                 #    pass
         
-        print(string)
         return parsed
-    def Parse(self, string):
-        return self.Parsing(self.Preprocess(string))
-        
-            
-a = SlotFillerWithRules(0)
-a.dict['goods'][0]
+    @overrides
+    def fill(self, text: str, intent: str) -> t.Dict[str, t.Any]:
+        self.dict['goods'] = Goods(int(intent))
+        processed_string = self.Preprocess(text)
+        return self.Parsing(processed_string)  
