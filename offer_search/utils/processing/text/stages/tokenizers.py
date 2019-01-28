@@ -34,8 +34,8 @@ class NltkTokenizer(Tokenizer):
     def __init__(self, download_if_missing: bool = False) -> None:
         if not (self.__is_punkt_downloaded() or download_if_missing):
             raise LookupError(
-                f"NLTK resource {__PUNKT} is missing. Try to fix it with "
-                f"`import nltk; nltk.download('{__PUNKT}')`"
+                f"NLTK resource {self.__PUNKT} is missing. Try to fix it with "
+                f"`import nltk; nltk.download('{self.__PUNKT}')`"
             )
 
         download(self.__PUNKT, quiet=True)
