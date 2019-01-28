@@ -9,13 +9,8 @@
 #  GitHub: @ameyuuno
 #
 
-import itertools as it
 import typing as t
 
-from nltk import download
-from nltk.data import find
-from nltk.tokenize import sent_tokenize
-from nltk.tokenize import word_tokenize
 from overrides import overrides
 
 from offer_search.utils.processing.text.text_processing_stages import Filter
