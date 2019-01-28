@@ -22,13 +22,13 @@ __all__ = [
 
 
 class CompositeFilter(Filter):
-    def __init__(self, filters: t.List[t.Callable[[str], bool]]) -> None:
-        self.__filters = filters
+    def __init__(self, filters: t.Optional[t.List[t.Callable[[str], bool]]] = None) -> None:
+        self.__filters = filters or list()
 
     @overrides
     def filter(self, tokens: t.List[str]) -> t.List[str]:
         return [
             token 
             for token in tokens 
-            if any((filter_(token) for filter_ in self.__filters))
+            if not any((filter_(token) for filter_ in self.__filters))
         ]
