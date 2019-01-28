@@ -32,11 +32,26 @@ class NltkTokenizer(Tokenizer):
     __PUNKT_RESOURCE = f'tokenizers/{__PUNKT}'
 
     def __init__(self, download_if_missing: bool = False) -> None:
-        # TODO: check existence of serialized tokenizers
-        pass
+        if not (self.__is_punkt_downloaded() or download_if_missing):
+            raise LookupError(
+                f"NLTK resource {__PUNKT} is missing. Try to fix it with "
+                f"`import nltk; nltk.download('{__PUNKT}')`"
+            )
+
+        download(self.__PUNKT, quiet=True)
 
     @overrides
     def split(self, text: str) -> t.List[str]:
         tokenized_sentences = (word_tokenize(sentence) for sentence in sent_tokenize(text))
 
         return list(it.chain.from_iterable(tokenized_sentences))
+
+    @classmethod
+    def __is_punkt_downloaded(cls) -> bool:
+        try:
+            find(cls.__PUNKT_RESOURCE)
+
+        except LookupError:
+            return False
+
+        return True
