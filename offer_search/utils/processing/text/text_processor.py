@@ -23,7 +23,7 @@ __all__ = [
 ]
 
 
-class TextProcessor(Processor[str, t.List[str]]):
+class TextProcessor(Processor[str, str]):
     def __init__(
         self,
         tokenizer: stages.Tokenizer = stages.SimpleTokenizer(),
@@ -31,10 +31,10 @@ class TextProcessor(Processor[str, t.List[str]]):
         normalizer: stages.Normalizer = stages.SimpleNormalizer(),
     ) -> None:
         def pipeline(text: str) -> t.List[str]:
-            return normalizer.normalize(filter_.filter(tokenizer.split(text)))
+            return ' '.join(normalizer.normalize(filter_.filter(tokenizer.split(text))))
         
         self.__pipeline = pipeline
 
     @overrides
-    def process(self, source: str) -> t.List[str]:
+    def process(self, source: str) -> str:
         return self.__pipeline(source)
