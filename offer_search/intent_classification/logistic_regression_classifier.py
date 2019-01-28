@@ -9,11 +9,14 @@
 #  GitHub: @ameyuuno
 #
 
+import typing as t
 from pathlib import Path
 from string import punctuation
 
 import joblib
+import numpy as np
 from nltk.corpus import stopwords
+from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import LabelEncoder
 from overrides import overrides
@@ -44,13 +47,25 @@ class Preprocessor(TextProcessor):
             Pymorphy2Normalizer(),
         )
 
-        self.__stopwords = stopwords.get('russian')
+        self.__stopwords = stopwords.words('russian')
 
     def __is_stopword(self, token) -> bool:
         return token in self.__stopwords
 
     def __is_not_word(self, token) -> bool:
         return not token.isalpha()
+
+
+class Vectorizer:
+    def __init__(self, vectorizer_path: Path) -> None:
+        if not vectorizer_path.exists():
+            raise ValueError("Can not load vectorizer")
+
+        with vectorizer_path.open('rb') as bin_:
+            self.__vectorizer: TfidfVectorizer = joblib.load(bin_)
+
+    def vectorize(self, text: str) -> np.ndarray:
+        return self.__vectorizer.transform([text])
 
 
 class IntentClassificationModel:
@@ -64,16 +79,27 @@ class IntentClassificationModel:
         with label_encoder_path.open('rb') as bin_:
             self.__label_encoder: LabelEncoder = joblib.load(bin_)
 
+    def predict(self, vector: np.ndarray) -> str:
+        intent = self.__classifier.predict(vector)
+
+        return self.__label_encoder.inverse_transform(intent)[0]
+
 
 class LogRegIntentClassifier(IntentClassifier):
-    def __init__(self, classifier_path: Path, label_encoder_path: Path) -> None:
+    def __init__(
+        self, 
+        vectorizer_path: Path,
+        classifier_path: Path, 
+        label_encoder_path: Path,
+    ) -> None:
         self.__preprocessor = Preprocessor(download_if_missing=True)
-        self.__vectorizer = None
+        self.__vectorize = Vectorizer(vectorizer_path)
         self.__model = IntentClassificationModel(classifier_path, label_encoder_path)
 
     @overrides
     def predict(self, text: str) -> str:
-        tokens = self.__preprocessor.process(text)
-        vectors = self.__vectorize.transform(tokens)
-        
-        intent = self.__classifier.predict([])
+        preprocessed_text = self.__preprocessor.process(text)
+        vectorized_text = self.__vectorize.vectorize(preprocessed_text)
+        intent = self.__model.predict(vectorized_text)
+
+        return intent

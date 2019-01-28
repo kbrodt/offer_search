@@ -10,8 +10,10 @@
 #
 
 from offer_search.intent_classification.base import IntentClassifier
+from offer_search.intent_classification.logistic_regression_classifier import LogRegIntentClassifier
 
 
 __all__ = [
     'IntentClassifier',
+    'LogRegIntentClassifier',
 ]
