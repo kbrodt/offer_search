@@ -1,4 +1,8 @@
-
+'''
+money_value: dictionary of all words meaning "pow".
+moneyNormalize: function convert string with price of item from query
+and return integer price.
+'''
 
 
 money_value = {
@@ -33,5 +37,3 @@ def moneyNormalize(string : str) -> int:
                 price *= money_value[apokr]
                 apokr = ""
     return price
-
-print(moneyNormalize("101 тысяча"))
