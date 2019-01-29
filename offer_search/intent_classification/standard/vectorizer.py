@@ -19,6 +19,7 @@ from offer_search.intent_classification.standard.intent_classifier import Vector
 
 
 __all__ = [
+    'CompositeVectorizer',
     'TfidfVectorizer',
 ]
 
