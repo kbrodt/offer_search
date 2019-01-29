@@ -61,7 +61,7 @@ class SlotFillerWithRules(SlotFiller):
             price_tokens = parser.findall(string)
             for match in price_tokens:
                 is_value += 1
-                parsed['Price'][price_keys_list[i]] = ' '.join([_.value for _ in match.tokens])
+                parsed['Price'][price_keys_list[i]] = ' '.join([_.value for _ in match.tokens]).replace("до ", "").replace("до ", "")
                 for token in match.tokens:
                     string = string.replace(" " + token.value + " ", " ")
         if (is_value == 0):
@@ -95,3 +95,7 @@ class SlotFillerWithRules(SlotFiller):
         self.dict['goods'] = Goods(int(intent))
         processed_string = self.preprocess(text)
         return self.parsing(processed_string)
+
+text = "купить ноутбук до 60 000"
+SF = SlotFillerWithRules()
+print(SF.fill(text, "0"))

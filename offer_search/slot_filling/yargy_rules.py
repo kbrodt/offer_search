@@ -56,7 +56,7 @@ PRICE_TO = rule(
 )
 #точное значение
 PRICE_VALUE = rule(
-    NUMBER_RULE,
+    NUMBER_RULE.repeatable(),
     not_(
         dictionary({
             "%",
