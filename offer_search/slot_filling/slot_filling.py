@@ -99,6 +99,3 @@ class SlotFillerWithRules(SlotFiller):
         processed_string = self.preprocess(text)
         return self.parsing(processed_string)
 
-text="купить горный велосипед за 50к 5к кэшбек"
-SF = SlotFillerWithRules()
-print(SF.fill(text, "0"))
