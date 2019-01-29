@@ -7,7 +7,7 @@ from yargy.pipelines import morph_pipeline
 #проверка на то, число ли это
 def is_number(string):
     for c in string:
-        if((ord(c) < 48 or ord(c) > 57) and not (c == "." or c == ",")):
+        if((ord(c) < 48 or ord(c) > 57)):
             return False
     return True
 	
