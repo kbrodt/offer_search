@@ -27,7 +27,11 @@ class SlotFillerWithRules(SlotFiller):
         parser = Parser(PERCENT_RULE)
         percent_tokens = parser.findall(string)
         for match in percent_tokens:
-            parsed['Cashback'] = ' '.join([_.value for _ in match.tokens])
+            cashback = ' '.join([_.value for _ in match.tokens])
+            #выбираем только числа без слов и знака %
+            parser = Parser(NUMBER_RULE)
+            for number_match in parser.findall(cashback):
+                parsed['Cashback'] = ' '.join([_.value for _ in number_match.tokens])
             for token in match.tokens:
                 string = string.replace(" " + token.value + " ", " ")
         
@@ -114,3 +118,14 @@ class SlotFillerWithRules(SlotFiller):
         processed_string = self.preprocess(text)
         return self.parsing(processed_string)
 
+text = "купить горный велосипед до 60 000 кешбэком 15 процентов со скидкой от 10к и держателем для воды покрышки в комплекте"
+'''
+text = "до 600 тыс"
+tokenizer = MorphTokenizer()
+print([_.value for _ in tokenizer(text)])
+p = Parser(MONEY_RULE)
+for match in p.findall(text):
+    print(' '.join([_.value for _ in match.tokens]))
+'''
+SF = SlotFillerWithRules()
+print(SF.fill(text, "0"))
