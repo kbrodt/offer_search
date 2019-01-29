@@ -12,36 +12,49 @@ class SlotFillerWithRules(SlotFiller):
         self.analyzer = pmh.MorphAnalyzer()
         self.dict = dict()
         self.price_rules = [PRICE_FROM, PRICE_TO]
-    def Preprocess(self, string):
+    def preprocess(self, string):
         string = string.lower()
         string = " " + string + " "
         return string
-    def Parsing(self, string):
+    def parsing(self, string):
         words = string.split(" ")
         parsed = dict()
        
         #FIND CASHBACK
-        parser = Parser(CASHBACK)
-        cashback_tokens = parser.findall(string)
-        cashback = ""
-        #пока тренируемся на том, чnо кэшбек только на один товар
-        for match in cashback_tokens:
-            cashback += ' '.join([_.value for _ in match.tokens])
-            for token in match.tokens:
-                string = string.replace(" " + token.value + " ", " ")
-        #вытаскиваем значения с размерностями:
-        parser = Parser(CASHBACK_VALUE)
-        cashback_tokens = parser.findall(cashback)
-        cashback = ""
-        for match in cashback_tokens:
-            cashback += ' '.join([_.value for _ in match.tokens])
-        #проверяем просто на вхождение процентов (т.к. пока мы рассрочку не учитываем)
-        if(cashback == ""):
-            parser = Parser(PERCENT_RULE)
-            cashback_tokens = parser.findall(cashback)
+        parsed['Cashback'] = "NaN"
+        cashback_rules = [CASHBACK_AFTER, CASHBACK_BEFORE]
+        erased_string = string
+        for rule in cashback_rules:
+            erased_string = string
+            parser = Parser(rule)
+            cashback_tokens = parser.findall(erased_string)
+            cashback = ""
+            for match in parser.findall(text):
+                print([_.value for _ in match.tokens])
+            #пока тренируемся на том, чnо кэшбек только на один товар
             for match in cashback_tokens:
                 cashback += ' '.join([_.value for _ in match.tokens])
-        parsed['Cashback'] = cashback.replace(" ", "")
+                if(cashback == ""):
+                    continue
+                for token in match.tokens:
+                    erased_string = erased_string.replace(" " + token.value + " ", " ")
+            #вытаскиваем значения с размерностями:
+            parser = Parser(CASHBACK_VALUE)
+            cashback_tokens = parser.findall(cashback)
+            cashback = ""
+            for match in cashback_tokens:
+                cashback += ' '.join([_.value for _ in match.tokens])
+            print(cashback)
+            #проверяем просто на вхождение процентов (т.к. пока мы рассрочку не учитываем)
+            if(cashback == ""):
+                parser = Parser(NUMBER_RULE)
+                cashback_tokens = parser.findall(cashback)
+                for match in cashback_tokens:
+                    cashback += ' '.join([_.value for _ in match.tokens])
+            else:
+                parsed['Cashback'] = cashback.replace(" ", "")
+                break
+        string = erased_string
         #find  price
         parsed['Price'] = {"From" : "NaN", "To": "NaN"}
         is_value = 0
@@ -83,7 +96,9 @@ class SlotFillerWithRules(SlotFiller):
     @overrides
     def fill(self, text: str, intent: str) -> t.Dict[str, t.Any]:
         self.dict['goods'] = Goods(int(intent))
-        processed_string = self.Preprocess(text)
-        return self.Parsing(processed_string)
+        processed_string = self.preprocess(text)
+        return self.parsing(processed_string)
+
+text="купить горный велосипед за 50к 5к кэшбек"
 SF = SlotFillerWithRules()
-print(SF.fill("купить горный велосипед за 50к", "0"))
+print(SF.fill(text, "0"))
