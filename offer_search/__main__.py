@@ -26,7 +26,8 @@ def create_intent_classifier() -> IntentClassifier:
     resource_directory = Path('./resources/intent_classification')
 
     return LogRegIntentClassifier(
-        resource_directory / 'vectorizer.joblib',
+        resource_directory / 'over_words_vectorizer.joblib',
+        resource_directory / 'over_trigrams_vectorizer.joblib',
         resource_directory / 'classifier.joblib',
         resource_directory / 'label_encoder.joblib',
     )
