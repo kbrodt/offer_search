@@ -12,8 +12,10 @@ class SlotFillerWithRules(SlotFiller):
         self.analyzer = pmh.MorphAnalyzer()
         self.dict = dict()
         self.price_rules = [PRICE_FROM, PRICE_TO]
+        self.tokenizer = MorphTokenizer()
     def preprocess(self, string):
         string = string.lower()
+        string = ' '.join(self.analyzer.parse(token.value)[0].normal_form for token in self.tokenizer(string))
         string = " [" + string + "] "
         return string
     def parsing(self, string):
@@ -51,6 +53,15 @@ class SlotFillerWithRules(SlotFiller):
             else:
                 parsed['Cashback'] = cashback.replace(" ", "")
                 break
+        
+        if(parsed['Cashback'] == "NaN" or parsed['Cashback'] == ""):
+            parser = Parser(PERCENT_RULE)
+            percent_tokens = parser.findall(string)
+            for match in percent_tokens:
+                parsed['Cashback'] = ' '.join([_.value for _ in match.tokens])
+                for token in match.tokens:
+                    erased_string = erased_string.replace(" " + token.value + " ", " ")
+        
         string = erased_string
         #find  price
         parsed['Price'] = {"From" : "NaN", "To": "NaN"}
@@ -96,3 +107,14 @@ class SlotFillerWithRules(SlotFiller):
         processed_string = self.preprocess(text)
         return self.parsing(processed_string)
 
+text = "[купить ноутбук до 60 000 15%]"
+'''
+text = "[6000]"
+tokenizer = MorphTokenizer()
+print([_.value for _ in tokenizer(text)])
+p = Parser(NUMBER_RULE)
+for match in p.findall(text):
+    print([_.value for _ in match.tokens])
+'''
+SF = SlotFillerWithRules()
+print(SF.fill(text, "0"))

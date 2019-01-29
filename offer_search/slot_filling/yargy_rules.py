@@ -17,15 +17,7 @@ NUMBER_RULE = rule(
     or_(
         gram("NUMR"),
         is_number_
-    ),
-    morph_pipeline([
-        ",",
-        "."
-    ]).optional(),
-    or_(
-        gram("NUMR"),
-        is_number_
-    ).optional()
+    )
 )
 #все приставки, означающие денки:
 MONEY_PIPE = morph_pipeline([
@@ -44,7 +36,7 @@ PRICE_FROM = rule(
         "от",
         "дороже"
     ]),
-    NUMBER_RULE,
+    NUMBER_RULE.repeatable(),
     MONEY_PIPE.optional()
 )
 #верхнюю границу
@@ -55,12 +47,12 @@ PRICE_TO = rule(
         "дешевле чем",
         "дешевле, чем"
     ]),
-    NUMBER_RULE,
+    NUMBER_RULE.repeatable(),
     MONEY_PIPE.optional()
 )
 #точное значение
 PRICE_VALUE = rule(
-    NUMBER_RULE,
+    NUMBER_RULE.repeatable(),
     not_(
         dictionary({
             "%",
