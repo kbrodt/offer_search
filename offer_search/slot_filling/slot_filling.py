@@ -28,7 +28,6 @@ class SlotFillerWithRules(SlotFiller):
         percent_tokens = parser.findall(string)
         for match in percent_tokens:
             parsed['Cashback'] = ' '.join([_.value for _ in match.tokens])
-            print(parsed['Cashback'])
             for token in match.tokens:
                 string = string.replace(" " + token.value + " ", " ")
         
@@ -41,7 +40,12 @@ class SlotFillerWithRules(SlotFiller):
             price_tokens = parser.findall(string)
             for match in price_tokens:
                 is_value += 1
-                parsed['Price'][price_keys_list[i]] = ' '.join([_.value for _ in match.tokens]).replace("до ", "").replace("до ", "")
+                price_string = ' '.join([_.value for _ in match.tokens])
+                parser = Parser(MONEY_RULE)
+                money = ""
+                for price_match in parser.findall(price_string):
+                    money = ' '.join([_.value for _ in price_match.tokens])
+                parsed['Price'][price_keys_list[i]] = money#' '.join([_.value for _ in match.tokens]).replace("до ", "").replace("до ", "")
                 for token in match.tokens:
                     string = string.replace(" " + token.value + " ", " ")
         if (is_value == 0):
@@ -86,15 +90,6 @@ class SlotFillerWithRules(SlotFiller):
             else:
                 parsed['Cashback'] = cashback.replace(" ", "")
                 break
-        '''
-        if(parsed['Cashback'] == "NaN" or parsed['Cashback'] == ""):
-            parser = Parser(PERCENT_RULE)
-            percent_tokens = parser.findall(string)
-            for match in percent_tokens:
-                parsed['Cashback'] = ' '.join([_.value for _ in match.tokens])
-                for token in match.tokens:
-                    erased_string = erased_string.replace(" " + token.value + " ", " ")
-        '''
         string = erased_string
         #find ATTRIBUTE
         parser = Parser(ATTRIBUTE)
@@ -119,14 +114,3 @@ class SlotFillerWithRules(SlotFiller):
         processed_string = self.preprocess(text)
         return self.parsing(processed_string)
 
-text = "купить горный велосипед до 60 000 кэшбек со скидкой от 10к и держателем для воды покрышки в комплекте"
-'''
-#text = "[6000]"
-tokenizer = MorphTokenizer()
-print([_.value for _ in tokenizer(text)])
-p = Parser(PERCENT_RULE)
-for match in p.findall(text):
-    print([_.value for _ in match.tokens])
-'''
-SF = SlotFillerWithRules()
-print(SF.fill(text, "0"))

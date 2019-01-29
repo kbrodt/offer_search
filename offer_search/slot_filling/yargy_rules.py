@@ -154,3 +154,7 @@ PERCENT_RULE = rule(
         "процент"
     ])
 )
+MONEY_RULE = rule(
+    NUMBER_RULE.repeatable(),
+    MONEY_PIPE.optional()
+)
