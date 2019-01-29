@@ -16,10 +16,11 @@ from string import punctuation
 import joblib
 import numpy as np
 from nltk.corpus import stopwords
+from overrides import overrides
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import LabelEncoder
-from overrides import overrides
+from scipy.sparse import hstack
 
 from offer_search.intent_classification.base import IntentClassifier
 from offer_search.utils.nltk_resource_manager import NltkResourceManager
@@ -57,16 +58,25 @@ class Preprocessor(TextProcessor):
 
 
 class Vectorizer:
-    def __init__(self, vectorizer_path: Path) -> None:
-        if not vectorizer_path.exists():
-            raise ValueError("Can not load vectorizer")
+    def __init__(
+        self, 
+        over_words_vectorizer_path: Path,
+        over_trigrams_vectorizer_path: Path,
+    ) -> None:
+        if not (over_words_vectorizer_path.exists() and over_trigrams_vectorizer_path.exists()):
+            raise ValueError("Can not load vectorizers")
 
-        with vectorizer_path.open('rb') as bin_:
-            self.__vectorizer: TfidfVectorizer = joblib.load(bin_)
+        with over_words_vectorizer_path.open('rb') as bin_:
+            self.__over_words_vectorizer: TfidfVectorizer = joblib.load(bin_)
+
+        with over_trigrams_vectorizer_path.open('rb') as bin_:
+            self.__over_trigrams_vectorizer: TfidfVectorizer = joblib.load(bin_)
 
     def vectorize(self, text: str) -> np.ndarray:
-        return self.__vectorizer.transform([text])
+        over_words_vector = self.__over_words_vectorizer.transform([text])
+        over_trigrams_vector = self.__over_trigrams_vectorizer.transform([text])
 
+        return hstack((over_words_vector, over_trigrams_vector))
 
 class IntentClassificationModel:
     def __init__(self, classifier_path: Path, label_encoder_path: Path) -> None:
@@ -88,12 +98,13 @@ class IntentClassificationModel:
 class LogRegIntentClassifier(IntentClassifier):
     def __init__(
         self, 
-        vectorizer_path: Path,
+        over_words_vectorizer_path: Path,
+        over_trigrams_vectorizer_path: Path,
         classifier_path: Path, 
         label_encoder_path: Path,
     ) -> None:
         self.__preprocessor = Preprocessor(download_if_missing=True)
-        self.__vectorize = Vectorizer(vectorizer_path)
+        self.__vectorize = Vectorizer(over_words_vectorizer_path, over_trigrams_vectorizer_path)
         self.__model = IntentClassificationModel(classifier_path, label_encoder_path)
 
     @overrides
