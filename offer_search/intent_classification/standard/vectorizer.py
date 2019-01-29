@@ -16,6 +16,7 @@ import joblib
 import numpy as np
 from overrides import overrides
 from scipy.sparse import hstack
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 from offer_search.intent_classification.standard.intent_classifier import Vectorizer
 
