@@ -22,7 +22,7 @@ class SlotFillerWithRules(SlotFiller):
         words = string.split(" ")
         parsed = dict()
        
-        #FIND CASHBACK
+        #FIND CASHBACK as %
         parsed['Cashback'] = "NaN"
         parser = Parser(PERCENT_RULE)
         percent_tokens = parser.findall(string)
@@ -32,6 +32,29 @@ class SlotFillerWithRules(SlotFiller):
             for token in match.tokens:
                 string = string.replace(" " + token.value + " ", " ")
         
+        #find  price
+        parsed['Price'] = {"From" : "NaN", "To": "NaN"}
+        is_value = 0
+        price_keys_list = list(parsed['Price'].keys())
+        for i in range(2):
+            parser = Parser(self.price_rules[i])
+            price_tokens = parser.findall(string)
+            for match in price_tokens:
+                is_value += 1
+                parsed['Price'][price_keys_list[i]] = ' '.join([_.value for _ in match.tokens]).replace("до ", "").replace("до ", "")
+                for token in match.tokens:
+                    string = string.replace(" " + token.value + " ", " ")
+        if (is_value == 0):
+            parser = Parser(PRICE_VALUE)
+            price_tokens = parser.findall(string)
+            price = ""
+            for match in price_tokens:
+                price = ' '.join([_.value for _ in match.tokens])
+                parsed['Price']["From"] = parsed['Price']["To"] = price
+                for token in match.tokens:
+                    string = string.replace(token.value + " ", "")
+        
+        #find cashback with word 'cashback'
         cashback_rules = [CASHBACK_AFTER, CASHBACK_BEFORE]
         erased_string = string
         for rule in cashback_rules:
@@ -73,35 +96,14 @@ class SlotFillerWithRules(SlotFiller):
                     erased_string = erased_string.replace(" " + token.value + " ", " ")
         '''
         string = erased_string
-        #find  price
-        parsed['Price'] = {"From" : "NaN", "To": "NaN"}
-        is_value = 0
-        price_keys_list = list(parsed['Price'].keys())
-        for i in range(2):
-            parser = Parser(self.price_rules[i])
-            price_tokens = parser.findall(string)
-            for match in price_tokens:
-                is_value += 1
-                parsed['Price'][price_keys_list[i]] = ' '.join([_.value for _ in match.tokens]).replace("до ", "").replace("до ", "")
-                for token in match.tokens:
-                    string = string.replace(" " + token.value + " ", " ")
-        if (is_value == 0):
-            parser = Parser(PRICE_VALUE)
-            price_tokens = parser.findall(string)
-            price = ""
-            for match in price_tokens:
-                price = ' '.join([_.value for _ in match.tokens])
-                parsed['Price']["From"] = parsed['Price']["To"] = price
-                for token in match.tokens:
-                    string = string.replace(token.value + " ", "")
-        
+        #find ATTRIBUTE
         parser = Parser(ATTRIBUTE)
         attr_tokens = parser.findall(string)
         attr = ""
-        parsed['Attributes'] = "NaN"
-        for match in attr_tokens:
-                attr = ' '.join([_.value for _ in match.tokens])
-                parsed['Attributes'] = attr
+        parsed['Attributes'] = string
+        #for match in attr_tokens:
+        #        attr = ' '.join([_.value for _ in match.tokens])
+        #        parsed['Attributes'] = attr
         parsed['Item'] = "NaN"
         for word in words:
             #find Item
@@ -117,7 +119,7 @@ class SlotFillerWithRules(SlotFiller):
         processed_string = self.preprocess(text)
         return self.parsing(processed_string)
 
-text = "купить горный велосипед до 60 000 15% кэшбек со скидкой"
+text = "купить горный велосипед до 60 000 кэшбек со скидкой от 10к и держателем для воды покрышки в комплекте"
 '''
 #text = "[6000]"
 tokenizer = MorphTokenizer()
