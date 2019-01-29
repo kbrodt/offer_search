@@ -16,7 +16,11 @@ from pathlib import Path
 from overrides import overrides
 
 from offer_search.intent_classification import IntentClassifier
-from offer_search.intent_classification import LogRegIntentClassifier
+from offer_search.intent_classification.standard import CompositeVectorizer
+from offer_search.intent_classification.standard import LogisticRegressionModel
+from offer_search.intent_classification.standard import Preprocessor
+from offer_search.intent_classification.standard import StandardIntentClassifier
+from offer_search.intent_classification.standard import TfidfVectorizer
 from offer_search.searcher import Searcher
 from offer_search.slot_filling import SlotFiller
 from offer_search.ranking import Ranker
@@ -25,11 +29,16 @@ from offer_search.ranking import Ranker
 def create_intent_classifier() -> IntentClassifier:
     resource_directory = Path('./resources/intent_classification')
 
-    return LogRegIntentClassifier(
-        resource_directory / 'over_words_vectorizer.joblib',
-        resource_directory / 'over_trigrams_vectorizer.joblib',
-        resource_directory / 'classifier.joblib',
-        resource_directory / 'label_encoder.joblib',
+    return StandardIntentClassifier(
+        Preprocessor(True),
+        CompositeVectorizer([
+            TfidfVectorizer(resource_directory / 'over_words_vectorizer.joblib'),
+            TfidfVectorizer(resource_directory / 'over_trigrams_vectorizer.joblib'),
+        ]),
+        LogisticRegressionModel(
+            resource_directory / 'classifier.joblib',
+            resource_directory / 'label_encoder.joblib',
+        ),
     )
 
 

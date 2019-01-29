@@ -20,6 +20,11 @@ from sklearn.preprocessing import LabelEncoder
 from offer_search.intent_classification.standard.intent_classifier import ClassificationModel
 
 
+__all__ = [
+    'LogisticRegressionModel',
+]
+
+
 class LogisticRegressionModel(ClassificationModel):
     def __init__(self, classifier_path: Path, label_encoder_path: Path) -> None:
         if not (classifier_path.exists() and label_encoder_path.exists()):

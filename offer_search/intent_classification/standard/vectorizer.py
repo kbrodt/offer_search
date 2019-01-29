@@ -49,4 +49,4 @@ class CompositeVectorizer(Vectorizer):
 
     @overrides
     def vectorize(self, text: str) -> np.ndarray:
-        return hstack((vectorizer.transform([text]) for vectorizer in self.__vectorizers))
+        return hstack([vectorizer.vectorize(text) for vectorizer in self.__vectorizers])
