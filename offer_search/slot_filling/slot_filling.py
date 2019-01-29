@@ -24,9 +24,19 @@ class SlotFillerWithRules(SlotFiller):
        
         #FIND CASHBACK
         parsed['Cashback'] = "NaN"
+        parser = Parser(PERCENT_RULE)
+        percent_tokens = parser.findall(string)
+        for match in percent_tokens:
+            parsed['Cashback'] = ' '.join([_.value for _ in match.tokens])
+            print(parsed['Cashback'])
+            for token in match.tokens:
+                string = string.replace(" " + token.value + " ", " ")
+        
         cashback_rules = [CASHBACK_AFTER, CASHBACK_BEFORE]
         erased_string = string
         for rule in cashback_rules:
+            if not (parsed['Cashback'] == "NaN" or parsed["Cashback"] == ""):
+                break
             erased_string = string
             parser = Parser(rule)
             cashback_tokens = parser.findall(erased_string)
@@ -53,7 +63,7 @@ class SlotFillerWithRules(SlotFiller):
             else:
                 parsed['Cashback'] = cashback.replace(" ", "")
                 break
-        
+        '''
         if(parsed['Cashback'] == "NaN" or parsed['Cashback'] == ""):
             parser = Parser(PERCENT_RULE)
             percent_tokens = parser.findall(string)
@@ -61,7 +71,7 @@ class SlotFillerWithRules(SlotFiller):
                 parsed['Cashback'] = ' '.join([_.value for _ in match.tokens])
                 for token in match.tokens:
                     erased_string = erased_string.replace(" " + token.value + " ", " ")
-        
+        '''
         string = erased_string
         #find  price
         parsed['Price'] = {"From" : "NaN", "To": "NaN"}
@@ -107,12 +117,12 @@ class SlotFillerWithRules(SlotFiller):
         processed_string = self.preprocess(text)
         return self.parsing(processed_string)
 
-text = "[купить ноутбук до 60 000 15%]"
+text = "купить горный велосипед до 60 000 15% кэшбек со скидкой"
 '''
-text = "[6000]"
+#text = "[6000]"
 tokenizer = MorphTokenizer()
 print([_.value for _ in tokenizer(text)])
-p = Parser(NUMBER_RULE)
+p = Parser(PERCENT_RULE)
 for match in p.findall(text):
     print([_.value for _ in match.tokens])
 '''
