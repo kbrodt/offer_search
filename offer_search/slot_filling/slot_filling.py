@@ -29,8 +29,6 @@ class SlotFillerWithRules(SlotFiller):
             parser = Parser(rule)
             cashback_tokens = parser.findall(erased_string)
             cashback = ""
-            for match in parser.findall(text):
-                print([_.value for _ in match.tokens])
             #пока тренируемся на том, чnо кэшбек только на один товар
             for match in cashback_tokens:
                 cashback += ' '.join([_.value for _ in match.tokens])
@@ -44,7 +42,6 @@ class SlotFillerWithRules(SlotFiller):
             cashback = ""
             for match in cashback_tokens:
                 cashback += ' '.join([_.value for _ in match.tokens])
-            print(cashback)
             #проверяем просто на вхождение процентов (т.к. пока мы рассрочку не учитываем)
             if(cashback == ""):
                 parser = Parser(NUMBER_RULE)
@@ -98,4 +95,3 @@ class SlotFillerWithRules(SlotFiller):
         self.dict['goods'] = Goods(int(intent))
         processed_string = self.preprocess(text)
         return self.parsing(processed_string)
-
