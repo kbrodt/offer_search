@@ -117,15 +117,26 @@ CASHBACK_VALUE = rule(
     MONEY_PERCENT.optional()
 )
 #упоминание о кэшбеке вместе с числовым значением
-CASHBACK_AFTER = rule(
-    morph_pipeline([
+CASHBACK_PIPE = morph_pipeline([
         "кэшбек",
         "кэшбэк",
+        "кешбек",
+        "кешбэк",
+        "кэшбека",
+        "кэшбэка",
+        "кешбека",
+        "кешбэка",
         "cb",
         "кб",
         "кэш",
-        "ashback"
-    ]),
+        "cashback",
+        "кэшбеком",
+        "кэшбэком",
+        "кешбеком",
+        "кешбэком"
+])
+CASHBACK_AFTER = rule(
+    CASHBACK_PIPE,
     dictionary({
         "от"
     }).optional(),
@@ -138,13 +149,7 @@ CASHBACK_BEFORE = rule(
     }).optional(),
     NUMBER_RULE.optional().repeatable(),
     MONEY_PERCENT.optional(),
-    morph_pipeline([
-        "кэшбек",
-        "кэшбэк",
-        "cb",
-        "кб",
-        "кэш"
-    ])
+    CASHBACK_PIPE
 )
 #число + обозначение процентов
 PERCENT_RULE = rule(
