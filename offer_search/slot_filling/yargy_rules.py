@@ -41,7 +41,8 @@ MONEY_PIPE = morph_pipeline([
 #нижнюю границу
 PRICE_FROM = rule(
     morph_pipeline([
-        "от"
+        "от",
+        "дороже"
     ]),
     NUMBER_RULE,
     MONEY_PIPE.optional()
@@ -49,14 +50,17 @@ PRICE_FROM = rule(
 #верхнюю границу
 PRICE_TO = rule(
     morph_pipeline([
-        "до"
+        "до",
+        "дешевле",
+        "дешевле чем",
+        "дешевле, чем"
     ]),
     NUMBER_RULE,
     MONEY_PIPE.optional()
 )
 #точное значение
 PRICE_VALUE = rule(
-    NUMBER_RULE.repeatable(),
+    NUMBER_RULE,
     not_(
         dictionary({
             "%",

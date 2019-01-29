@@ -14,7 +14,7 @@ class SlotFillerWithRules(SlotFiller):
         self.price_rules = [PRICE_FROM, PRICE_TO]
     def preprocess(self, string):
         string = string.lower()
-        string = " " + string + " "
+        string = " [" + string + "] "
         return string
     def parsing(self, string):
         words = string.split(" ")
@@ -96,6 +96,3 @@ class SlotFillerWithRules(SlotFiller):
         processed_string = self.preprocess(text)
         return self.parsing(processed_string)
 
-text = "купить ноутбук до 60 000"
-SF = SlotFillerWithRules()
-print(SF.fill(text, "0"))
