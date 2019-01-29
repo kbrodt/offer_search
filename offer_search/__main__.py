@@ -30,7 +30,7 @@ def create_intent_classifier() -> IntentClassifier:
     resource_directory = Path('./resources/intent_classification')
 
     return StandardIntentClassifier(
-        Preprocessor(True),
+        Preprocessor(download_if_missing=True),
         CompositeVectorizer([
             TfidfVectorizer(resource_directory / 'over_words_vectorizer.joblib'),
             TfidfVectorizer(resource_directory / 'over_trigrams_vectorizer.joblib'),
