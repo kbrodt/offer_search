@@ -37,7 +37,7 @@ PRICE_FROM = rule(
         "дороже"
     ]),
     NUMBER_RULE.repeatable(),
-    MONEY_PIPE.optional()
+    MONEY_PIPE.optional().repeatable()
 )
 #верхнюю границу
 PRICE_TO = rule(
@@ -48,7 +48,7 @@ PRICE_TO = rule(
         "дешевле, чем"
     ]),
     NUMBER_RULE.repeatable(),
-    MONEY_PIPE.optional()
+    MONEY_PIPE.optional().repeatable()
 )
 #точное значение
 PRICE_VALUE = rule(
@@ -60,7 +60,7 @@ PRICE_VALUE = rule(
             "процентов"
         })
     ),
-    MONEY_PIPE.optional()
+    MONEY_PIPE.optional().repeatable()
 )
 #поиск атрибутов.
 #Note: в строку атрибутов входит название самого товара
@@ -100,14 +100,14 @@ MONEY_PERCENT = rule(
             "процент",
             "%"
         ]).optional(),
-        MONEY_PIPE
+        MONEY_PIPE.repeatable()
         ),
     rule(
         morph_pipeline([
             "процент",
             "%"
         ]),
-        MONEY_PIPE.optional()
+        MONEY_PIPE.optional().repeatable()
     )
     )
 )
