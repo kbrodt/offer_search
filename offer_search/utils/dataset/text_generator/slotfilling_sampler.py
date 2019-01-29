@@ -37,7 +37,6 @@ def make_slot(phrase_slots, sep=' '):
     
         {'start': start position of slot,
          'end': end position of slot,
-         'len': length of slot value # actually redundant key
          'title': name of slot,
          'text': slot value}
     
@@ -56,7 +55,6 @@ def make_slot(phrase_slots, sep=' '):
             slot_dict = dict()
             slot_dict['start'] = start_position
             slot_dict['end'] = start_position + len(phrase)
-            slot_dict['len'] = slot_dict['end'] - slot_dict['start']
             slot_dict['title'] = slot
             slot_dict['text'] = phrase
             slots.append(slot_dict)
