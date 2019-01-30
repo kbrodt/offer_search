@@ -59,4 +59,3 @@ class ElasticsearchRanker(Ranker):
                 doc_type=self.__doc_type, 
                 body=record,
             )
-
