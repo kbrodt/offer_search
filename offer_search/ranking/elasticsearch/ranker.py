@@ -90,11 +90,13 @@ class ElasticsearchRanker(Ranker):
 
     @overrides
     def rank(self, search_form: t.Dict[str, t.Any]) -> t.List[t.Dict[str, t.Any]]:
-        return self.__elasticsearch.search(
+        search_result = self.__elasticsearch.search(
             index=self.__index,
             doc_type=self.__doc_type,
             body=self.__build_search_query(search_form),
         )
+
+        return [record['_source'] for record in search_result['hits']['hits']]
 
     def __preset(self, preset: t.List[t.Dict[str, t.Any]]) -> None:
         for record in preset:
