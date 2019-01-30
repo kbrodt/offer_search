@@ -9,6 +9,7 @@
 #  GitHub: @ameyuuno
 #
 
+import itertools as it
 import typing as t
 
 from offer_search.intent_classification import IntentClassifier
@@ -37,4 +38,27 @@ class Searcher:
         form = self.__slot_filler.fill(text, intent)
         ranking = self.__ranker.rank(form)
 
-        return ranking[:n_top]
+        offers = self.__group_product_ranking_by_offer(ranking)
+
+        return offers[:n_top]
+
+    @staticmethod
+    def __group_product_ranking_by_offer(
+        ranking: t.List[t.Dict[str, t.Any]],
+    ) -> t.List[t.Dict[str, t.Any]]:
+        offers = self.__extract_offers(ranking)
+
+        return [
+            {
+                'offer': offers[offer_id],
+                'products': list(product),  # here we can return shorten information about the 
+                                            # products or only links to them
+            }
+            for offer_id, products in it.groupby(ranking, key=lambda product: product['offer_id'])
+        ]
+
+    @staticmethod
+    def __extract_offers(ranking: t.List[t.Dict[str, t.Any]]) -> t.Dict[str, t.Any]:
+        unique_offers = {product['offer'] for product in ranking}
+        
+        return {offer['id']: offer for offer in unique_offers}
