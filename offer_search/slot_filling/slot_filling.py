@@ -44,9 +44,11 @@ class SlotFillerWithRules(NormalizingSlotFiller):
                 string = string.replace(" " + token.value + " ", " ")
         
         #find  price
-        parsed['Price'] = {"From" : "NaN", "To": "NaN"}
+        price_dict['Price'] = {"From" : "NaN", "To": "NaN"}
+        parsed['Price from'] = 'NaN'
+        parsed['Price to'] = 'NaN'
         is_value = 0
-        price_keys_list = list(parsed['Price'].keys())
+        price_keys_list = list(price_dict['Price'].keys())
         for i in range(2):
             parser = Parser(self.price_rules[i])
             price_tokens = parser.findall(string)
@@ -57,7 +59,7 @@ class SlotFillerWithRules(NormalizingSlotFiller):
                 money = ""
                 for price_match in parser.findall(price_string):
                     money = ' '.join([_.value for _ in price_match.tokens])
-                parsed['Price'][price_keys_list[i]] = money#' '.join([_.value for _ in match.tokens]).replace("до ", "").replace("до ", "")
+                price_dict['Price'][price_keys_list[i]] = money#' '.join([_.value for _ in match.tokens]).replace("до ", "").replace("до ", "")
                 for token in match.tokens:
                     string = string.replace(" " + token.value + " ", " ")
         if (is_value == 0):
@@ -66,9 +68,12 @@ class SlotFillerWithRules(NormalizingSlotFiller):
             price = ""
             for match in price_tokens:
                 price = ' '.join([_.value for _ in match.tokens])
-                parsed['Price']["From"] = parsed['Price']["To"] = price
+                price_dict['Price']["From"] = price_dict['Price']["To"] = price
                 for token in match.tokens:
                     string = string.replace(token.value + " ", "")
+        
+        parsed['Price from'] = price_dict['Price']["From"]
+        parsed['Price to'] = price_dict['Price']["To"]
         
         #find cashback with word 'cashback'
         cashback_rules = [CASHBACK_AFTER, CASHBACK_BEFORE]
@@ -149,3 +154,7 @@ class SlotFillerWithRules(NormalizingSlotFiller):
                         apokr = ""
             form['Price'][key] = price
         return form
+
+text = "где купить велосипед"
+sf = SlotFillerWithRules()
+print(sf.fill(text, "0"))
