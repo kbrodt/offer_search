@@ -127,11 +127,11 @@ class SlotFillerWithRules(NormalizingSlotFiller):
         return self.normalize(self.parsing(processed_string))
     @overrides
     def normalize(self, form: t.Dict[str, t.Any]) -> t.Dict[str, t.Any]:
-        apokr = ""
         keys = money_value.keys()
-        price = 0
         price_keys = form['Price'].keys()
         for key in price_keys:
+            apokr = ""
+            price = 0
             string = form['Price'][key]
             for sym in string:
                 if(sym == " "):
