@@ -104,12 +104,12 @@ class ElasticsearchRanker(Ranker):
             (cls.__KEYS_TO_SET_PRICE_FROM, search_form['Price_from']),
             (cls.__KEYS_TO_SET_PRICE_TO, search_form['Price_to']),
         ):
-            cls.__set__query_value(search_query, query_keys, query_value)
+            cls.__set_query_value(search_query, query_keys, query_value)
 
         return search_query
 
     @staticmethod
-    def __set__query_value(query: t.Dict[str, t.Any], keys: t.Tuple[str], value: t.Any) -> t.NoReturn:
+    def __set_query_value(query: t.Dict[str, t.Any], keys: t.Tuple[str], value: t.Any) -> t.NoReturn:
         container = query
 
         # try to come to penultimate ("last but one") contrainer, so use keys without its tail
