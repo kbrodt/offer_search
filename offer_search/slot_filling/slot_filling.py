@@ -124,7 +124,7 @@ class SlotFillerWithRules(NormalizingSlotFiller):
     def fill(self, text: str, intent: str) -> t.Dict[str, t.Any]:
         self.dict['goods'] = Goods(int(intent))
         processed_string = self.preprocess(text)
-        return self.parsing(processed_string)
+        return self.normalize(self.parsing(processed_string))
     @overrides
     def normalize(self, form: t.Dict[str, t.Any]) -> t.Dict[str, t.Any]:
         apokr = ""
