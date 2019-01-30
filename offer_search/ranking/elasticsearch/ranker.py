@@ -43,8 +43,9 @@ class ElasticsearchRanker(Ranker):
                 ],
                 'should': [
                     {
-                        'match': {
-                            'Attributes': None
+                        'multi_match': {
+                                'query': None,
+                                'fields': ['Item', 'Attributes']
                             }
                     },
                 ],
@@ -62,7 +63,7 @@ class ElasticsearchRanker(Ranker):
         },
     }
     __KEYS_TO_SET_ITEM = ('query', 'bool', 'must', 0, 'fuzzy', 'Item', 'value')
-    __KEYS_TO_SET_ATTRIBUTES = ('query', 'bool', 'should', 0, 'match', 'Attributes')
+    __KEYS_TO_SET_ATTRIBUTES = ('query', 'bool', 'should', 0, 'multi_match', 'query')
     __KEYS_TO_SET_PRICE_FROM = ('query', 'bool', 'filter', 0, 'range', 'Price', 'gte')
     __KEYS_TO_SET_PRICE_TO = ('query', 'bool', 'filter', 0, 'range', 'Price', 'lte')
 
