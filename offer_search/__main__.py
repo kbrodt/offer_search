@@ -23,6 +23,7 @@ from offer_search.intent_classification.standard import StandardIntentClassifier
 from offer_search.intent_classification.standard import TfidfVectorizer
 from offer_search.searcher import Searcher
 from offer_search.slot_filling import SlotFiller
+from offer_search.slot_filling.slot_filling import SlotFillerWithRules
 from offer_search.ranking import Ranker
 
 
@@ -43,12 +44,7 @@ def create_intent_classifier() -> IntentClassifier:
 
 
 def create_slot_filler() -> SlotFiller:
-    class SlotFillerMock(SlotFiller):
-        @overrides
-        def fill(self, text: str, intent: str) -> t.Dict[str, t.Any]:
-            return dict()
-
-    return SlotFillerMock()
+    return SlotFillerWithRules()
 
 
 def create_ranker() -> Ranker:
