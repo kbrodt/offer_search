@@ -12,7 +12,7 @@
 import abc
 import typing as t
 
-from base import SlotFiller
+from .base import SlotFiller
 
 
 __all__ = [
