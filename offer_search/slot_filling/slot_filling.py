@@ -105,8 +105,8 @@ class SlotFillerWithRules(NormalizingSlotFiller):
         string = erased_string
         #find ATTRIBUTE
         parser = Parser(ATTRIBUTE)
-        attr_tokens = parser.findall(string)
-        attr = ""
+        # attr_tokens = parser.findall(string)
+        # attr = ""
         parsed['Attributes'] = string
         #for match in attr_tokens:
         #        attr = ' '.join([_.value for _ in match.tokens])
