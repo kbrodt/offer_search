@@ -1,13 +1,21 @@
-from base import SlotFiller
+from normalizing_slot_filler import NormalizingSlotFiller
 from dictionaries import Goods
 from yargy_rules import *
 from overrides import overrides
 import typing as t
 import pymorphy2 as pmh
 
-goods = []
+money_value = {
+    "k" : 1000,
+    "к" : 1000,
+    "тыс" : 1000,
+    "тысяча" : 1000,
+    "косарь" : 1000,#ХД
+    "м" : 1000000,
+    "миллион" : 1000000
+}
 
-class SlotFillerWithRules(SlotFiller):
+class SlotFillerWithRules(NormalizingSlotFiller):
     def __init__(self):
         self.analyzer = pmh.MorphAnalyzer()
         self.dict = dict()
@@ -117,15 +125,25 @@ class SlotFillerWithRules(SlotFiller):
         self.dict['goods'] = Goods(int(intent))
         processed_string = self.preprocess(text)
         return self.parsing(processed_string)
-
-text = "купить горный велосипед до 60 000 кешбэком 15 процентов со скидкой от 10к и держателем для воды покрышки в комплекте"
-'''
-text = "до 600 тыс"
-tokenizer = MorphTokenizer()
-print([_.value for _ in tokenizer(text)])
-p = Parser(MONEY_RULE)
-for match in p.findall(text):
-    print(' '.join([_.value for _ in match.tokens]))
-'''
-SF = SlotFillerWithRules()
-print(SF.fill(text, "0"))
+    @overrides
+    def normalize(self, form: t.Dict[str, t.Any]) -> t.Dict[str, t.Any]:
+        apokr = ""
+        keys = money_value.keys()
+        price = 0
+        price_keys = form['Price'].keys()
+        for key in price_keys:
+            string = form['Price'][key]
+            for sym in string:
+                if(sym == " "):
+                    continue
+                if(ord(sym) >= 48 and ord(sym) <= 57):
+                    price *= 10
+                    price += int(sym)
+                else:
+                    apokr += sym
+                    #основываемся на том, что все слова - значения порядка
+                    if(apokr in keys):
+                        price *= money_value[apokr]
+                        apokr = ""
+            form['Price'][key] = price
+        return form
