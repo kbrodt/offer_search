@@ -24,7 +24,7 @@ class SlotFillerWithRules(NormalizingSlotFiller):
     def preprocess(self, string):
         string = string.lower()
         string = ' '.join(self.analyzer.parse(token.value)[0].normal_form for token in self.tokenizer(string))
-        string = " [" + string + "] "
+        string = " " + string + " "
         return string
     def parsing(self, string):
         words = string.split(" ")
@@ -111,13 +111,15 @@ class SlotFillerWithRules(NormalizingSlotFiller):
         #for match in attr_tokens:
         #        attr = ' '.join([_.value for _ in match.tokens])
         #        parsed['Attributes'] = attr
-        parsed['Item'] = "NaN"
+        parsed['Item'] = ""
         for word in words:
             #find Item
+            print(word)
             if(self.analyzer.parse(word)[0].normal_form in self.dict['goods']):
-                parsed['Item'] = word
+                parsed['Item'] += word + ' '
                 #while True:
                 #    pass
+        parsed['Item'] = parsed['Item'][:-1]
         
         return parsed
     @overrides
