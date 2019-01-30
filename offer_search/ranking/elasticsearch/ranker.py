@@ -33,29 +33,38 @@ class ElasticsearchRanker(Ranker):
             'bool': {
                 'must': [
                     {
-                        'match': {
-                            'Item': None,
+                        'fuzzy': {
+                            'Item': {
+                                'value': None,
+                                'prefix_length': 0,
+                            }
                         },
+                    },
+                ],
+                'should': [
+                    {
+                        'match': {
+                            'Attributes': None
+                            }
                     },
                 ],
                 'filter': [
                     {
                         'range': {
-                            'Price_from': {
+                            'Price': {
                                 'gte': None,
-                            },
-                            'Price_to': {
                                 'lte': None,
-                            },
+                            }
                         },
-                    },
-                ],
+                    }
+                ]
             },
         },
     }
-    __KEYS_TO_SET_ITEM = ('query', 'bool', 'must', 0, 'match', 'Item')
-    __KEYS_TO_SET_PRICE_FROM = ('query', 'bool', 'filter', 0, 'range', 'Price_from', 'gte')
-    __KEYS_TO_SET_PRICE_TO = ('query', 'bool', 'filter', 0, 'range', 'Price_to', 'lte')
+    __KEYS_TO_SET_ITEM = ('query', 'bool', 'must', 0, 'fuzzy', 'Item', 'value')
+    __KEYS_TO_SET_ATTRIBUTES = ('query', 'bool', 'should', 0, 'match', 'Attributes')
+    __KEYS_TO_SET_PRICE_FROM = ('query', 'bool', 'filter', 0, 'range', 'Price', 'gte')
+    __KEYS_TO_SET_PRICE_TO = ('query', 'bool', 'filter', 0, 'range', 'Price', 'lte')
 
     def __init__(
         self, 
@@ -81,7 +90,7 @@ class ElasticsearchRanker(Ranker):
 
     @overrides
     def rank(self, search_form: t.Dict[str, t.Any]) -> t.List[t.Dict[str, t.Any]]:
-        search_response = self.__elasticsearch.search(
+        return self.__elasticsearch.search(
             index=self.__index,
             doc_type=self.__doc_type,
             body=self.__build_search_query(search_form),
@@ -101,6 +110,7 @@ class ElasticsearchRanker(Ranker):
 
         for query_keys, query_value in (
             (cls.__KEYS_TO_SET_ITEM, search_form['Item']),
+            (cls.__KEYS_TO_SET_ATTRIBUTES, search_form['Attributes']),
             (cls.__KEYS_TO_SET_PRICE_FROM, search_form['Price_from']),
             (cls.__KEYS_TO_SET_PRICE_TO, search_form['Price_to']),
         ):
