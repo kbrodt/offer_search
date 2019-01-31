@@ -26,7 +26,7 @@ __all__ = [
 
 class ElasticsearchRanker(Ranker):
     __DEFAULT_INDEX = 'offer_search'
-    __DEFAULT_DOC_TYPE = 'offer'
+    __DEFAULT_DOC_TYPE = 'product'
 
     __SEARCH_QUERY = {
         'query': {
