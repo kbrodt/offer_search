@@ -3,16 +3,16 @@ import os
 
 
 class Goods(object):
-    def __init__(self, intent: int):
+    def __init__(self, intent: str):
         self.analyzer = pmh.MorphAnalyzer()
         self.goods = []
-        self.paths = [
-            os.path.join(os.path.join(os.path.join('data'), 'sport'), 'slots.csv'),
-            os.path.join(os.path.join(os.path.join('data'), 'food'), 'slots.csv'),
-            #"..//..//data//sport//slots.csv",
-            #"..//..//data//food//slots.csv"
-        ]
-        self.parse(self.paths[int(intent)], ' ')
+        self.paths = {
+            "sport" : os.path.join(os.path.join(os.path.join('data'), 'sport'), 'slots.csv'),
+            "food" : os.path.join(os.path.join(os.path.join('data'), 'food'), 'slots.csv'),
+            #"sport" : "..//..//data//sport//slots.csv",
+            #"food" : "..//..//data//food//slots.csv"
+        }
+        self.parse(self.paths[intent], ' ')
     def __getitem__(self, key):
         return self.goods[int(key)]
     #@overrides
