@@ -10,10 +10,10 @@ class Goods(object):
             "велосипед"
         ]
         self.paths = [
-            os.path.join(os.path.join(os.path.join('data'), 'sport'), 'slots.csv'),
-            os.path.join(os.path.join(os.path.join('data'), 'food'), 'slots.csv'),
-            #"..//..//data//sport//slots.csv",
-            #"..//..//data//food//slots.csv"
+            #os.path.join(os.path.join(os.path.join('data'), 'sport'), 'slots.csv'),
+            #os.path.join(os.path.join(os.path.join('data'), 'food'), 'slots.csv'),
+            "..//..//data//sport//slots.csv",
+            "..//..//data//food//slots.csv"
         ]
         self.parse(self.paths[int(intent)], ' ')
     def __getitem__(self, key):
