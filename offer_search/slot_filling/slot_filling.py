@@ -24,7 +24,7 @@ class SlotFillerWithRules(NormalizingSlotFiller):
     def preprocess(self, string):
         string = string.lower()
         string = ' '.join(self.analyzer.parse(token.value)[0].normal_form for token in self.tokenizer(string))
-        string = " " + string + " "
+        string = " [" + string + "] "
         return string
     def parsing(self, string):
         words = string.split(" ")
@@ -66,7 +66,7 @@ class SlotFillerWithRules(NormalizingSlotFiller):
             price = ""
             for match in price_tokens:
                 price = ' '.join([_.value for _ in match.tokens])
-                parsed['Price from'] = price_dict['Price to'] = price
+                parsed['Price from'] = parsed['Price to'] = price
                 for token in match.tokens:
                     string = string.replace(token.value + " ", "")
         
@@ -105,12 +105,16 @@ class SlotFillerWithRules(NormalizingSlotFiller):
                 break
         string = erased_string
         #find ATTRIBUTE
-        parser = Parser(ATTRIBUTE)
+        #parser = Parser(ATTRIBUTE)
         # attr_tokens = parser.findall(string)
         # attr = ""
+        string = string.replace('[', '').replace(']', '')
         parsed['Attributes'] = string
-        if(string[-1] == ' '):
+        if(parsed['Attributes'][-1] == ' '):
             parsed['Attributes'] = parsed['Attributes'][:-1]
+        if(parsed['Attributes'][0] == ' '):
+            parsed['Attributes'] = parsed['Attributes'][1:]
+        
         #for match in attr_tokens:
         #        attr = ' '.join([_.value for _ in match.tokens])
         #        parsed['Attributes'] = attr
@@ -150,4 +154,12 @@ class SlotFillerWithRules(NormalizingSlotFiller):
                         price *= money_value[apokr]
                         apokr = ""
             form[key] = price
+        if(form['Price to'] == 0):
+            form['Price to'] = 999999999;
+        if(form['Cashback'] == '' or form['Cashback'] == 'NaN'):
+            form['Cashback'] = 0
         return form
+
+text = "где купить велосипед от 30к кэшбек"
+sf = SlotFillerWithRules()
+print(sf.fill(text, "0"))
