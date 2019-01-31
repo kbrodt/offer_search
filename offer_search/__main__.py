@@ -49,21 +49,14 @@ def create_slot_filler() -> SlotFiller:
 
 
 def create_ranker() -> Ranker:
-    # with Path('./resources/ranking/preset.json').open('r') as preset_file:
-    #     preset: t.List[t.Dict[str, t.Any]] = json.load(preset_file)
+    with Path('./resources/ranking/preset.json').open('r') as preset_file:
+        preset: t.List[t.Dict[str, t.Any]] = json.load(preset_file)
 
-    # return ElasticsearchRanker(
-    #     es_host='localhost',
-    #     es_host=9200,
-    #     preset=preset,
-    # )
-
-    class RankerMock(Ranker):
-        @overrides
-        def rank(self, search_form: t.Dict[str, t.Any]) -> t.List[t.Dict[str, t.Any]]:
-            return list()
-
-    return RankerMock()
+    return ElasticsearchRanker(
+        es_host='localhost',
+        es_host=9200,
+        preset=preset,
+    )
 
 
 def main() -> t.NoReturn:
