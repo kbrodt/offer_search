@@ -46,19 +46,11 @@ class Searcher:
     def __group_product_ranking_by_offer(
         ranking: t.List[t.Dict[str, t.Any]],
     ) -> t.List[t.Dict[str, t.Any]]:
-        offers = self.__extract_offers(ranking)
-
         return [
             {
-                'offer': offers[offer_id],
-                'products': list(product),  # here we can return shorten information about the 
+                'offer': offer,
+                'products': list(products),  # here we can return shorten information about the 
                                             # products or only links to them
             }
-            for offer_id, products in it.groupby(ranking, key=lambda product: product['offer_id'])
+            for offer, products in it.groupby(ranking, key=lambda product: product['Offer'])
         ]
-
-    @staticmethod
-    def __extract_offers(ranking: t.List[t.Dict[str, t.Any]]) -> t.Dict[str, t.Any]:
-        unique_offers = {product['offer'] for product in ranking}
-        
-        return {offer['id']: offer for offer in unique_offers}
