@@ -58,13 +58,6 @@ def create_ranker() -> Ranker:
     #     preset=preset,
     # )
 
-    class RankerMock(Ranker):
-        @overrides
-        def rank(self, search_form: t.Dict[str, t.Any]) -> t.List[t.Dict[str, t.Any]]:
-            return list()
-
-    return RankerMock()
-
 
 def main() -> t.NoReturn:
     """Entrypoint
