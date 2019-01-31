@@ -12,7 +12,7 @@
 import abc
 import typing as t
 
-from offer_search.slot_filling.base import SlotFiller
+from .base import SlotFiller
 
 
 __all__ = [
