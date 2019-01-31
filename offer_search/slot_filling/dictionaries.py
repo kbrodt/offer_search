@@ -5,10 +5,7 @@ import os
 class Goods(object):
     def __init__(self, intent: int):
         self.analyzer = pmh.MorphAnalyzer()
-        self.goods = [
-            "велик",
-            "велосипед"
-        ]
+        self.goods = []        ]
         self.paths = [
             #os.path.join(os.path.join(os.path.join('data'), 'sport'), 'slots.csv'),
             #os.path.join(os.path.join(os.path.join('data'), 'food'), 'slots.csv'),
