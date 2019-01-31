@@ -27,7 +27,6 @@ class SlotFillerWithRules(NormalizingSlotFiller):
         string = " [" + string + "] "
         return string
     def parsing(self, string):
-        words = string.split(" ")
         parsed = dict()
        
         #FIND CASHBACK as %
@@ -109,6 +108,7 @@ class SlotFillerWithRules(NormalizingSlotFiller):
         # attr_tokens = parser.findall(string)
         # attr = ""
         string = string.replace('[', '').replace(']', '')
+        words = string.split(' ')
         parsed['Attributes'] = string
         if(parsed['Attributes'][-1] == ' '):
             parsed['Attributes'] = parsed['Attributes'][:-1]
@@ -130,7 +130,7 @@ class SlotFillerWithRules(NormalizingSlotFiller):
         return parsed
     @overrides
     def fill(self, text: str, intent: str) -> t.Dict[str, t.Any]:
-        self.dict['goods'] = Goods(int(intent))
+        self.dict['goods'] = Goods(intent)
         processed_string = self.preprocess(text)
         return self.normalize(self.parsing(processed_string))
     @overrides
@@ -159,7 +159,3 @@ class SlotFillerWithRules(NormalizingSlotFiller):
         if(form['Cashback'] == '' or form['Cashback'] == 'NaN'):
             form['Cashback'] = 0
         return form
-
-text = "где купить велосипед от 30к кэшбек"
-sf = SlotFillerWithRules()
-print(sf.fill(text, "0"))
