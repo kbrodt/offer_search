@@ -25,6 +25,7 @@ from offer_search.searcher import Searcher
 from offer_search.slot_filling import SlotFiller
 from offer_search.slot_filling.slot_filling import SlotFillerWithRules
 from offer_search.ranking import Ranker
+from offer_search.ranking.elasticsearch import ElasticsearchRanker
 
 
 def create_intent_classifier() -> IntentClassifier:
@@ -48,6 +49,15 @@ def create_slot_filler() -> SlotFiller:
 
 
 def create_ranker() -> Ranker:
+    # with Path('./resources/ranking/preset.json').open('r') as preset_file:
+    #     preset: t.List[t.Dict[str, t.Any]] = json.load(preset_file)
+
+    # return ElasticsearchRanker(
+    #     es_host='localhost',
+    #     es_host=9200,
+    #     preset=preset,
+    # )
+
     class RankerMock(Ranker):
         @overrides
         def rank(self, search_form: t.Dict[str, t.Any]) -> t.List[t.Dict[str, t.Any]]:
