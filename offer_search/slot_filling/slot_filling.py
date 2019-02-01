@@ -125,7 +125,7 @@ class SlotFillerWithRules(NormalizingSlotFiller):
         attr = ""
         for match in parser.findall(string):
             attr += ' '.join([_.value for _ in match.tokens]) + ' '
-        parsed['Atrribute'] = attr[:-1]
+        parsed['Attributes'] = attr[:-1]
         
         words = string.split(' ')
         parsed['Item'] = ""

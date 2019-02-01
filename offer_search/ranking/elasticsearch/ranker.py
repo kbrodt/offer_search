@@ -70,6 +70,7 @@ class ElasticsearchRanker(Ranker):
                 ]
             },
         },
+        'size': 10000,
     }
 
 
@@ -104,6 +105,7 @@ class ElasticsearchRanker(Ranker):
                 ]
             },
         },
+        'size': 10000,
     }
 
     __KEYS_TO_SET_ITEM = ('query', 'bool', 'must', 0, 'fuzzy', 'Item', 'value')
