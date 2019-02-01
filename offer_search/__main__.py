@@ -49,7 +49,7 @@ def create_slot_filler() -> SlotFiller:
 
 
 def create_ranker() -> Ranker:
-    with Path('./resources/ranking/preset.json').open('r') as preset_file:
+    with Path('./resources/ranking/preset_small.json').open('r') as preset_file:
         preset: t.List[t.Dict[str, t.Any]] = json.load(preset_file)
 
     return ElasticsearchRanker(
@@ -75,7 +75,7 @@ def main() -> t.NoReturn:
 
         print("offers =>")
         for i, offer in enumerate(offers):
-            print(f"\tOffer #{i + 1}\n\t{json.dumps(offer)}")
+            print(f"\tOffer #{i + 1}\n\t{json.dumps(offer, ensure_ascii=False, indent=2)}")
  
 
 if __name__ == '__main__':
