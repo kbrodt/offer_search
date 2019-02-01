@@ -10,6 +10,7 @@
 #
 
 import itertools as it
+import json
 import typing as t
 
 from offer_search.intent_classification import IntentClassifier
@@ -35,7 +36,11 @@ class Searcher:
 
     def search(self, text: str, n_top: int = 5) -> t.List[t.Dict[str, t.Any]]:
         intent = self.__intent_classifier.predict(text)
+        print(f'Intent: {intent}')
+
         form = self.__slot_filler.fill(text, intent)
+        print(f'Slots: {json.dumps(form, ensure_ascii=False, indent=2)}')
+
         ranking = self.__ranker.rank(form)
 
         offers = self.__group_product_ranking_by_offer(ranking)
@@ -46,11 +51,35 @@ class Searcher:
     def __group_product_ranking_by_offer(
         ranking: t.List[t.Dict[str, t.Any]],
     ) -> t.List[t.Dict[str, t.Any]]:
-        return [
-            {
-                'offer': offer,
-                'products': list(products),  # here we can return shorten information about the 
-                                             # products or only links to them
-            }
-            for offer, products in it.groupby(ranking, key=lambda product: product['Offer'])
-        ]
+        offer_names = set()
+        offers = []
+        for offer, products in it.groupby(ranking, key=lambda product: product['Offer']):
+            if offer in offer_names:
+                continue
+
+            new_products = []
+            for product in products:
+                product.pop('Offer')
+                web = product.pop('Web')
+                cashback = product.pop('Cashback')
+                period = product.pop('Period')
+                offer_type = product.pop('Offer_type')
+                advert_text = product.pop('Advert_text')
+                new_products.append(product)
+            products = new_products
+
+            offer_names.add(offer)
+            offers.append({
+                'offer': {
+                    'offer': offer,
+                    'web': web,
+                    'cashback': cashback,
+                    'period': period,
+                    'offer_type': offer_type,
+                    'advert_text': advert_text,
+                },
+                'products': list(products)[:3],  # here we can return shorten information about the 
+                                                 # products or only links to them
+            })
+
+        return offers
