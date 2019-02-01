@@ -131,15 +131,19 @@ class SlotFillerWithRules(NormalizingSlotFiller):
         parsed['Item'] = ""
         for word in words:
             #find Item
-            normalized_word = self.analyzer.parse(word)[0].normal_form
-            saved_word = ""
-            minimum = len(normalized_word)
-            for dictionary_word in self.dict['goods']:
-                dis = self.leveinstein_distance(normalized_word, dictionary_word)
-                if(dis < minimum):
-                    minimum = dis
-                    saved_word = dictionary_word
-            parsed['Item'] += saved_word + ' '
+            if(self.analyzer.parse(word)[0].normal_form in self.dict['goods']):
+                parsed['Item'] += word + ' '
+                #while True:
+                #    pass
+            # normalized_word = self.analyzer.parse(word)[0].normal_form
+            # saved_word = ""
+            # minimum = len(normalized_word)
+            # for dictionary_word in self.dict['goods']:
+            #     dis = self.leveinstein_distance(normalized_word, dictionary_word)
+            #     if(dis < minimum):
+            #         minimum = dis
+            #         saved_word = dictionary_word
+            # parsed['Item'] += saved_word + ' '
         parsed['Item'] = parsed['Item'][:-1]
         
         return parsed
