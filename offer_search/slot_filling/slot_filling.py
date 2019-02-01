@@ -21,6 +21,23 @@ class SlotFillerWithRules(NormalizingSlotFiller):
         self.dict = dict()
         self.price_rules = [PRICE_FROM, PRICE_TO]
         self.tokenizer = MorphTokenizer()
+    def leveinstein_distance(self, str1, str2):
+        "Calculates the Levenshtein distance between a and b."
+        n, m = len(str1), len(str2)
+        if n > m:
+            str1, str2 = str2, str1
+            n, m = m, n
+
+        current_row = range(n+1) # Keep current and previous row, not entire matrix
+        for i in range(1, m+1):
+            previous_row, current_row = current_row, [i]+[0]*n
+            for j in range(1,n+1):
+                add, delete, change = previous_row[j]+1, current_row[j-1]+1, previous_row[j-1]
+                if str1[j-1] != str2[i-1]:
+                    change += 1
+                current_row[j] = min(add, delete, change)
+
+        return current_row[n]
     def preprocess(self, string):
         string = string.lower()
         string = ' '.join(self.analyzer.parse(token.value)[0].normal_form for token in self.tokenizer(string))
@@ -114,10 +131,15 @@ class SlotFillerWithRules(NormalizingSlotFiller):
         parsed['Item'] = ""
         for word in words:
             #find Item
-            if(self.analyzer.parse(word)[0].normal_form in self.dict['goods']):
-                parsed['Item'] += word + ' '
-                #while True:
-                #    pass
+            normalized_word = self.analyzer.parse(word)[0].normal_form
+            saved_word = ""
+            minimum = len(normalized_word)
+            for dictionary_word in self.dict['goods']:
+                dis = self.leveinstein_distance(normalized_word, dictionary_word)
+                if(dis < minimum):
+                    minimum = dis
+                    saved_word = dictionary_word
+            parsed['Item'] += saved_word + ' '
         parsed['Item'] = parsed['Item'][:-1]
         
         return parsed
@@ -154,3 +176,7 @@ class SlotFillerWithRules(NormalizingSlotFiller):
         else:
             form['Cashback'] = int(form['Cashback'])
         return form
+
+text = "купить велосепед за 5000"
+sf = SlotFillerWithRules()
+print(sf.fill(text, "sport"))
