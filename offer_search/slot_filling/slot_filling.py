@@ -102,22 +102,15 @@ class SlotFillerWithRules(NormalizingSlotFiller):
             else:
                 parsed['Cashback'] = cashback.replace(" ", "")
                 break
-        string = erased_string
+        string = erased_string.replace('[', '').replace(']', '')
         #find ATTRIBUTE
-        #parser = Parser(ATTRIBUTE)
-        # attr_tokens = parser.findall(string)
-        # attr = ""
-        string = string.replace('[', '').replace(']', '')
-        words = string.split(' ')
-        parsed['Attributes'] = string
-        if(parsed['Attributes'][-1] == ' '):
-            parsed['Attributes'] = parsed['Attributes'][:-1]
-        if(parsed['Attributes'][0] == ' '):
-            parsed['Attributes'] = parsed['Attributes'][1:]
+        parser = Parser(ATTRIBUTE)
+        attr = ""
+        for match in parser.findall(string):
+            attr += ' '.join([_.value for _ in match.tokens]) + ' '
+        parsed['Atrribute'] = attr[:-1]
         
-        #for match in attr_tokens:
-        #        attr = ' '.join([_.value for _ in match.tokens])
-        #        parsed['Attributes'] = attr
+        words = string.split(' ')
         parsed['Item'] = ""
         for word in words:
             #find Item

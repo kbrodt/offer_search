@@ -1,4 +1,5 @@
 import pymorphy2 as pmh
+from yargy_rules import *
 import os
 
 
@@ -19,12 +20,11 @@ class Goods(object):
     def parse(self, file : str, bracket : str):
         #bracket - символ, отделяющий название от описания
         with open(file, "r", encoding='utf-8') as file:
+            parser = Parser(ATTRIBUTE)
             for line in file:
                 line = line.replace('\n', '')
-                words = line.split(bracket)
-                for word in words:
-                    tokens = self.analyzer.parse(word)
-                    for token in tokens:
-                        self.goods.append(token.normal_form)
+                for match in parser.findall(line):
+                    for token in match.tokens:
+                        self.goods.append(token.value)
         #исключаем повторы
         self.goods = list(set(self.goods))

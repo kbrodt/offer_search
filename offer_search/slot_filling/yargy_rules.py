@@ -86,11 +86,7 @@ TRUE =rule(
     true
 )
 ATTRIBUTE = rule(
-    #TRUE.optional().repeatable(),
-    MEANING.optional().repeatable(),
-    #TRUE.repeatable(),
-    gram("NOUN").repeatable(),
-    #TRUE.optional().repeatable()
+    MEANING
 )
 #поиск упоминаний процентов или денежных обозначений
 MONEY_PERCENT = rule(
