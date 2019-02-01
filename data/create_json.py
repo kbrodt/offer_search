@@ -18,7 +18,7 @@ def create_json(path):
         for _, row_meta in meta_frame.iterrows():
             new_json = {
                 'Item': str(row[0]).lower(),
-                'Attributes': '' if row[1] != row[1] else row[1],
+                'Attributes': '' if row[1] != row[1] else row[1].lower(),
                 'Price': int(row[2]),
                 
                 'Offer': row_meta[0],
@@ -26,7 +26,7 @@ def create_json(path):
                 'Cashback': 0 if row_meta[2] != row_meta[2] else row_meta[2],
                 'Period': 0 if row_meta[3] != row_meta[3] else row_meta[3],
                 'Offer_type': '' if row_meta[4] != row_meta[4] else row_meta[4],
-                'Advert_text': '' if row_meta[5] != row_meta[5] else row_meta[5]
+                'Advert_text': '' if row_meta[5] != row_meta[5] else row_meta[5].lower()
             }
             all_json.append(new_json)
 
