@@ -1,5 +1,5 @@
 import pymorphy2 as pmh
-from yargy_rules import *
+from .yargy_rules import Parser, ATTRIBUTE
 import os
 
 
