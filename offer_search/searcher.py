@@ -50,7 +50,7 @@ class Searcher:
             {
                 'offer': offer,
                 'products': list(products),  # here we can return shorten information about the 
-                                            # products or only links to them
+                                             # products or only links to them
             }
             for offer, products in it.groupby(ranking, key=lambda product: product['Offer'])
         ]
