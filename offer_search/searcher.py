@@ -39,7 +39,7 @@ class Searcher:
         print(f'Intent:\t{intent}')
 
         form = self.__slot_filler.fill(text, intent)
-        if 0 == len(form['Item'].stip()):
+        if 0 == len(form['Item'].strip()):
             form.pop('Item')
 
         print(f'Slots:\t{json.dumps(form, ensure_ascii=False, indent=2)}')
