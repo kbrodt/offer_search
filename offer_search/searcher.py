@@ -43,13 +43,14 @@ class Searcher:
 
         ranking = self.__ranker.rank(form)
 
-        offers = self.__group_product_ranking_by_offer(ranking)
+        offers = self.__group_product_ranking_by_offer(ranking, n_top)
 
         return offers[:n_top]
 
     @staticmethod
     def __group_product_ranking_by_offer(
         ranking: t.List[t.Dict[str, t.Any]],
+        n_top: int = 5,
     ) -> t.List[t.Dict[str, t.Any]]:
         offer_names = set()
         offers = []
@@ -78,8 +79,8 @@ class Searcher:
                     'offer_type': offer_type,
                     'advert_text': advert_text,
                 },
-                'products': list(products)[:3],  # here we can return shorten information about the 
-                                                 # products or only links to them
+                'products': list(products)[:n_top],  # here we can return shorten information about the 
+                                                     # products or only links to them
             })
 
         return offers
