@@ -70,6 +70,7 @@ class ElasticsearchRanker(Ranker):
                 ]
             },
         },
+        'size': 10000,
     }
 
 
@@ -103,6 +104,7 @@ class ElasticsearchRanker(Ranker):
                     }
                 ]
             },
+            'size': 10000,
         },
     }
 
