@@ -176,7 +176,3 @@ class SlotFillerWithRules(NormalizingSlotFiller):
         else:
             form['Cashback'] = int(form['Cashback'])
         return form
-
-text = "купить велосепед за 5000"
-sf = SlotFillerWithRules()
-print(sf.fill(text, "sport"))
