@@ -1,6 +1,7 @@
 import pandas as pd
 import os
 import json
+import random
 
 path_food = './food'
 path_sport = './sport'
@@ -41,3 +42,9 @@ for directory in all_files_sport:
 
 with open('../resources/ranking/preset.json', 'w', encoding='utf-8') as fout:
     json.dump(all_json, fout)
+
+
+random.seed(1)
+all_json_small = [f for f in all_json if random.random() < 0.1]
+with open('../resources/ranking/preset_small.json', 'w', encoding='utf-8') as fout:
+    json.dump(all_json_small, fout)
