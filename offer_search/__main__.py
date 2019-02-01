@@ -54,7 +54,7 @@ def create_ranker() -> Ranker:
 
     return ElasticsearchRanker(
         es_host='localhost',
-        es_host=9200,
+        es_port=9200,
         preset=preset,
     )
 
