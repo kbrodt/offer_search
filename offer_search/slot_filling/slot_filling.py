@@ -43,8 +43,8 @@ class SlotFillerWithRules(NormalizingSlotFiller):
                 string = string.replace(" " + token.value + " ", " ")
         
         #find
-        parsed['Price from'] = parsed['Price to'] = 'NaN'
-        price_keys = ['Price from', 'Price to']
+        parsed['Price_from'] = parsed['Price_to'] = 'NaN'
+        price_keys = ['Price_from', 'Price_to']
         is_value = 0
         for i in range(2):
             parser = Parser(self.price_rules[i])
@@ -65,7 +65,7 @@ class SlotFillerWithRules(NormalizingSlotFiller):
             price = ""
             for match in price_tokens:
                 price = ' '.join([_.value for _ in match.tokens])
-                parsed['Price from'] = parsed['Price to'] = price
+                parsed['Price_from'] = parsed['Price_to'] = price
                 for token in match.tokens:
                     string = string.replace(token.value + " ", "")
         
@@ -136,7 +136,7 @@ class SlotFillerWithRules(NormalizingSlotFiller):
     @overrides
     def normalize(self, form: t.Dict[str, t.Any]) -> t.Dict[str, t.Any]:
         keys = money_value.keys()
-        price_keys = ['Price from', 'Price to']
+        price_keys = ['Price_from', 'Price_to']
         for key in price_keys:
             apokr = ""
             price = 0
@@ -154,8 +154,8 @@ class SlotFillerWithRules(NormalizingSlotFiller):
                         price *= money_value[apokr]
                         apokr = ""
             form[key] = price
-        if(form['Price to'] == 0):
-            form['Price to'] = 999999999;
+        if(form['Price_to'] == 0):
+            form['Price_to'] = 999999999
         if(form['Cashback'] == '' or form['Cashback'] == 'NaN'):
             form['Cashback'] = 0
         return form
