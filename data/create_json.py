@@ -11,11 +11,9 @@ all_files_sport = os.listdir(path_sport)
 
 def create_json(path):
     data = pd.read_excel(os.path.join(path, 'data_cleaned.xls'))
-    data_frame = pd.DataFrame(data)
     meta = pd.read_excel(os.path.join(path, 'meta.xls'))
-    meta_frame = pd.DataFrame(meta)
-    for _, row in data_frame.iterrows():
-        for _, row_meta in meta_frame.iterrows():
+    for _, row in data.iterrows():
+        for _, row_meta in meta.iterrows():
             new_json = {
                 'Item': str(row[0]).lower(),
                 'Attributes': '' if row[1] != row[1] else row[1].lower(),
@@ -23,8 +21,8 @@ def create_json(path):
                 
                 'Offer': row_meta[0],
                 'Web': row_meta[1],
-                'Cashback': 0 if row_meta[2] != row_meta[2] else row_meta[2],
-                'Period': 0 if row_meta[3] != row_meta[3] else row_meta[3],
+                'Cashback': 0 if row_meta[2] != row_meta[2] else int(row_meta[2]),
+                'Period': 0 if row_meta[3] != row_meta[3] else int(row_meta[3]),
                 'Offer_type': '' if row_meta[4] != row_meta[4] else row_meta[4],
                 'Advert_text': '' if row_meta[5] != row_meta[5] else row_meta[5].lower()
             }
