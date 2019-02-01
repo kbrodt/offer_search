@@ -41,6 +41,8 @@ class Searcher:
         form = self.__slot_filler.fill(text, intent)
         if 0 == len(form['Item'].strip()):
             form.pop('Item')
+            if 0 == len(form['Attributes'].strip()):
+                form['Attributes'] = text
 
         print(f'Slots:\t{json.dumps(form, ensure_ascii=False, indent=2)}')
 
