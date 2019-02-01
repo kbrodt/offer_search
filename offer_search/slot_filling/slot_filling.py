@@ -158,4 +158,6 @@ class SlotFillerWithRules(NormalizingSlotFiller):
             form['Price_to'] = 999999999
         if(form['Cashback'] == '' or form['Cashback'] == 'NaN'):
             form['Cashback'] = 0
+        else:
+            form['Cashback'] = int(form['Cashback'])
         return form
