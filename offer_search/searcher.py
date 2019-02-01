@@ -36,10 +36,10 @@ class Searcher:
 
     def search(self, text: str, n_top: int = 5) -> t.List[t.Dict[str, t.Any]]:
         intent = self.__intent_classifier.predict(text)
-        print(f'Intent: {intent}')
+        print(f'Intent:\t{intent}')
 
         form = self.__slot_filler.fill(text, intent)
-        print(f'Slots: {json.dumps(form, ensure_ascii=False, indent=2)}')
+        print(f'Slots:\t{json.dumps(form, ensure_ascii=False, indent=2)}')
 
         ranking = self.__ranker.rank(form)
 
