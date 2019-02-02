@@ -231,4 +231,3 @@ class SlotFillerWithRules(NormalizingSlotFiller):
                     cb_numbers += sym
             form['Cashback'] = int(cb_numbers)
         return form
-

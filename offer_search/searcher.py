@@ -43,12 +43,28 @@ class Searcher:
             form.pop('Item')
             if 0 == len(form['Attributes'].strip()):
                 form['Attributes'] = text
+        form['Offer_type_from'] = form['Offer_type']
+        form['Offer_type_to'] = form['Offer_type']
+        is_cb = 0 == form['Offer_type'] and 0 > form['Cashback']
+        is_in = 1 == form['Offer_type']
 
         print(f'Slots:\t{json.dumps(form, ensure_ascii=False, indent=2)}')
 
-        ranking = self.__ranker.rank(form)
-        if form['Cashback'] > 0 and 0 == len(ranking):
-            form['Cashback'] = 0
+        if is_cb:
+            ranking = self.__ranker.rank(form)
+            if 0 == len(ranking):
+                form['Cashback'] = 0
+                ranking = self.__ranker.rank(form)
+        elif is_in:
+            ranking = self.__ranker.rank(form)
+        else:
+            form['Offer_type_from'] = 0
+            form['Offer_type_to'] = 1
+            ranking = self.__ranker.rank(form)
+
+        if 0 == len(ranking):
+            form['Offer_type_from'] = 0
+            form['Offer_type_to'] = 1
             ranking = self.__ranker.rank(form)
 
         offers = self.__group_product_ranking_by_offer(ranking)
