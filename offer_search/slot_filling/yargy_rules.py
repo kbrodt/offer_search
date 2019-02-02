@@ -66,6 +66,7 @@ PRICE_VALUE = rule(
 #Note: в строку атрибутов входит название самого товара
 MEANING = rule(
     not_(
+    or_(
         or_(
             or_(
                 gram("INFN"),
@@ -79,7 +80,9 @@ MEANING = rule(
                     gram("PRCL"), gram("ADVB")
                 )
             )
-        )
+        ),
+        gram('UNKN')
+    )
     )
 )
 TRUE = rule(
