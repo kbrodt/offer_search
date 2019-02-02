@@ -66,7 +66,15 @@ class ElasticsearchRanker(Ranker):
                                 'gte': None,
                             }
                         },
-                    }
+                    },
+                    {
+                        'range': {
+                            'Offer_type': {
+                                'gte' : None,
+                                'lte' : None,
+                            }
+                        }
+                    },
                 ]
             },
         },
@@ -101,7 +109,15 @@ class ElasticsearchRanker(Ranker):
                                 'gte': None,
                             }
                         },
-                    }
+                    },
+                    {
+                        'range': {
+                            'Offer_type': {
+                                'gte' : None,
+                                'lte' : None,
+                            }
+                        }
+                    },
                 ]
             },
         },
@@ -113,6 +129,8 @@ class ElasticsearchRanker(Ranker):
     __KEYS_TO_SET_PRICE_FROM = ('query', 'bool', 'filter', 0, 'range', 'Price', 'gte')
     __KEYS_TO_SET_PRICE_TO = ('query', 'bool', 'filter', 0, 'range', 'Price', 'lte')
     __KEYS_TO_SET_CASHBACK = ('query', 'bool', 'filter', 1, 'range', 'Cashback', 'gte')
+    __KEYS_TO_SET_OFFER_TYPE_FROM = ('query', 'bool', 'filter', 2, 'range', 'Offer_type', 'gte')
+    __KEYS_TO_SET_OFFER_TYPE_TO = ('query', 'bool', 'filter', 2, 'range', 'Offer_type', 'lte')
 
     def __init__(
         self, 
@@ -168,6 +186,8 @@ class ElasticsearchRanker(Ranker):
                 (cls.__KEYS_TO_SET_PRICE_FROM, search_form['Price_from']),
                 (cls.__KEYS_TO_SET_PRICE_TO, search_form['Price_to']),
                 (cls.__KEYS_TO_SET_CASHBACK, search_form['Cashback']),
+                (cls.__KEYS_TO_SET_OFFER_TYPE_FROM, search_form['Offer_type_from']),
+                (cls.__KEYS_TO_SET_OFFER_TYPE_TO, search_form['Offer_type_to']),
             ):
                 cls.__set_query_value(search_query, query_keys, query_value)
         else:
@@ -178,6 +198,8 @@ class ElasticsearchRanker(Ranker):
                 (cls.__KEYS_TO_SET_PRICE_FROM, search_form['Price_from']),
                 (cls.__KEYS_TO_SET_PRICE_TO, search_form['Price_to']),
                 (cls.__KEYS_TO_SET_CASHBACK, search_form['Cashback']),
+                (cls.__KEYS_TO_SET_OFFER_TYPE_FROM, search_form['Offer_type_from']),
+                (cls.__KEYS_TO_SET_OFFER_TYPE_TO, search_form['Offer_type_to']),
             ):
                 cls.__set_query_value(search_query, query_keys, query_value)
 
