@@ -29,6 +29,11 @@ __DEFAULT_LOG_TEMPLATE = '[%(asctime)-23s] %(name)-80s %(filename)35s:%(lineno)-
 def __build_configuration() -> t.Dict[str, t.Any]:
     load_dotenv(find_dotenv())
 
+    configuration_core = {
+        'RANKER_ELASTICSEARCH_HOST': getenv('RANKER_ELASTICSEARCH_HOST', 'localhost'),
+        'RANKER_ELASTICSEARCH_PORT': int(getenv('RANKER_ELASTICSEARCH_PORT', '9200')),
+    }
+
     configuration_logging = {
         'LOGGING_LEVEL': getenv('LOGGING_LEVEL', default='INFO'),
         'LOG_TEMPLATE': getenv('LOG_TEMPLATE', default=__DEFAULT_LOG_TEMPLATE),
@@ -43,6 +48,7 @@ def __build_configuration() -> t.Dict[str, t.Any]:
     }
 
     return {
+        **configuration_core,
         **configuration_logging,
         **configuration_server,
     }
