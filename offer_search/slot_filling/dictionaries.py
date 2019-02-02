@@ -24,9 +24,9 @@ class Goods(object):
                 line = line.replace('\n', '')
                 self.goods.append(line)
                 #print(line)
-                #for match in parser.findall(line):
-                #    for token in match.tokens:
-                #        self.goods.append(line[token.span.start:token.span.stop])
+                for match in parser.findall(line):
+                    for token in match.tokens:
+                        self.goods.append(line[token.span.start:token.span.stop])
                         
         #исключаем повторы
         self.goods = list(set(self.goods))
