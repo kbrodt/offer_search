@@ -155,7 +155,6 @@ class SlotFillerWithRules(NormalizingSlotFiller):
                     for tags in self.analyzer.parse(dictionary_word):
                         if(tags.score > maximum):
                             maximum = tags.score
-                            print(dictionary_word, maximum)
                             if(tags.tag.POS == 'NOUN'):
                                 is_noun = True
                                 max_word = dictionary_word
