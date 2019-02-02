@@ -10,6 +10,7 @@
 #
 
 import itertools as it
+import logging
 import json
 import typing as t
 
@@ -21,6 +22,9 @@ from offer_search.core.ranking import Ranker
 __all__ = [
     'Searcher',
 ]
+
+
+logger = logging.getLogger(__name__)
 
 
 class Searcher:
@@ -36,7 +40,7 @@ class Searcher:
 
     def search(self, text: str, n_top: int = 5) -> t.List[t.Dict[str, t.Any]]:
         intent = self.__intent_classifier.predict(text)
-        print(f'Intent:\t{intent}')
+        logger.debug(f"intent:\t{intent}")
 
         form = self.__slot_filler.fill(text, intent)
         if 0 == len(form['Item'].strip()):
@@ -44,7 +48,7 @@ class Searcher:
             if 0 == len(form['Attributes'].strip()):
                 form['Attributes'] = text
 
-        print(f'Slots:\t{json.dumps(form, ensure_ascii=False, indent=2)}')
+        logger.debug(f"slots:\t{json.dumps(form, ensure_ascii=False, indent=4)}")
 
         ranking = self.__ranker.rank(form)
         if form['Cashback'] > 0 and 0 == len(ranking):
@@ -88,7 +92,7 @@ class Searcher:
                     'advert_text': advert_text,
                 },
                 'products': list(products)[:n_top],  # here we can return shorten information about the 
-                                                        # products or only links to them
+                                                     # products or only links to them
             })
 
         return offers
