@@ -46,6 +46,9 @@ class HttpServer:
         self.__application.router.add_view('/offer_search', views.OfferSearchView, name='offer_search')
         self.__application.router.add_static('/static', path=static_path, name='static')
 
+    def add_property(self, name: str, property_: t.Any) -> t.NoReturn:
+        self.__application[name] = property_
+
     def start(self) -> t.NoReturn:
         logger.info(f"start the server: http://{self.__host}:{self.__port}")
 
