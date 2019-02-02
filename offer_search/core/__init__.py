@@ -19,6 +19,7 @@ from offer_search.core.intent_classification.standard import LogisticRegressionM
 from offer_search.core.intent_classification.standard import Preprocessor
 from offer_search.core.intent_classification.standard import StandardIntentClassifier
 from offer_search.core.intent_classification.standard import TfidfVectorizer
+from offer_search.core.searcher import Searcher
 from offer_search.core.slot_filling import SlotFiller
 from offer_search.core.slot_filling.slot_filling import SlotFillerWithRules
 from offer_search.core.ranking import Ranker
@@ -26,6 +27,7 @@ from offer_search.core.ranking.elasticsearch import ElasticsearchRanker
 
 
 __all__ = [
+    'Searcher',
     'create_intent_classifier',
     'create_slot_filler',
     'create_ranker',
