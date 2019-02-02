@@ -18,9 +18,9 @@ money_value = {
 class SlotFillerWithRules(NormalizingSlotFiller):
     def __init__(self):
         self.analyzer = pmh.MorphAnalyzer()
-        self.dict = dict()
         self.price_rules = [PRICE_FROM, PRICE_TO]
         self.tokenizer = MorphTokenizer()
+        self.dict = dict()
     def leveinstein_distance(self, str1, str2):
         "Calculates the Levenshtein distance between a and b."
         n, m = len(str1), len(str2)
@@ -129,20 +129,32 @@ class SlotFillerWithRules(NormalizingSlotFiller):
         parsed['Item'] = ""
         for word in words:
             #find Item
-            if(self.analyzer.parse(word)[0].normal_form in self.dict['goods']):
-                parsed['Item'] += word + ' '
-                #while True:
-                #    pass
+            #if(self.analyzer.parse(word)[0].normal_form in self.dict['goods']):
+            #    parsed['Item'] += word + ' '
+            #    #while True:
+            #    #    pass
+            
             normalized_word = self.analyzer.parse(word)[0].normal_form
             saved_word = ""
             minimum = len(normalized_word)
             for dictionary_word in self.dict['goods']:
                 dis = self.leveinstein_distance(normalized_word, dictionary_word)
                 if(dis < minimum and dis < len(dictionary_word) / 2):
-                    minimum = dis
-                    saved_word = dictionary_word
-        parsed['Item'] += saved_word + ' '
+                    if(self.analyzer.parse(dictionary_word)[0].tag.POS == 'NOUN' and self.analyzer.parse(dictionary_word)[0].score > 0.45):
+                        minimum = dis
+                        saved_word = dictionary_word
+        
+            parsed['Item'] += saved_word + ' '
+        words_a = parsed['Attributes'].split(' ')
+        words_i = parsed['Item'].split(' ')
+        for word in words_a:
+            if(word in words_i):
+                parsed['Attributes'] = parsed['Attributes'].replace(word, '')
         #parsed['Item'] = parsed['Item'][:-1]
+        while parsed['Item'][0] == ' ':
+            parsed['Item'] = parsed['Item'][1:]
+        while parsed['Item'][-1] == ' ':
+            parsed['Item'] = parsed['Item'][:-1]
         
         return parsed
     @overrides
@@ -180,3 +192,4 @@ class SlotFillerWithRules(NormalizingSlotFiller):
         return form
 
 
+t

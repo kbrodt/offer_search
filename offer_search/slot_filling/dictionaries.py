@@ -18,7 +18,6 @@ class Goods(object):
         return self.goods[int(key)]
     #@overrides
     def parse(self, file : str, bracket : str):
-        #bracket - символ, отделяющий название от описания
         with open(file, "r", encoding='utf-8') as file:
             parser = Parser(ATTRIBUTE)
             for line in file:
@@ -28,3 +27,4 @@ class Goods(object):
                         self.goods.append(token.value)
         #исключаем повторы
         self.goods = list(set(self.goods))
+        #print(self.goods)
