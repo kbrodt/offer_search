@@ -52,7 +52,7 @@ class SlotFillerWithRules(NormalizingSlotFiller):
         for match in parser.findall(string):
             parsed['Offer_type'] = 1
             for token in match.tokens:
-                erased_string = ' ' + erased_string.replace(" " + token.value + " ", " ") + ' '
+                erased_string = ' ' + string.replace(" " + token.value + " ", " ") + ' '
         string = erased_string
         #FIND CASHBACK as %
         parsed['Cashback'] = "NaN"
