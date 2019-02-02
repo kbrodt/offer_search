@@ -22,9 +22,12 @@ class Goods(object):
             parser = Parser(ATTRIBUTE)
             for line in file:
                 line = line.replace('\n', '')
-                for match in parser.findall(line):
-                    for token in match.tokens:
-                        self.goods.append(token.value)
+                self.goods.append(line)
+                #print(line)
+                #for match in parser.findall(line):
+                #    for token in match.tokens:
+                #        self.goods.append(line[token.span.start:token.span.stop])
+                        
         #исключаем повторы
         self.goods = list(set(self.goods))
         #print(self.goods)

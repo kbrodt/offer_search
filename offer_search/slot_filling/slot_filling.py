@@ -134,13 +134,19 @@ class SlotFillerWithRules(NormalizingSlotFiller):
             #    #while True:
             #    #    pass
             
-            normalized_word = self.analyzer.parse(word)[0].normal_form
+            #normalized_word = self.analyzer.parse(word)[0].normal_form
+            normalized_word = word
             saved_word = ""
             minimum = len(normalized_word)
             for dictionary_word in self.dict['goods']:
                 dis = self.leveinstein_distance(normalized_word, dictionary_word)
-                if(dis < minimum and dis < len(dictionary_word) / 2):
-                    if(self.analyzer.parse(dictionary_word)[0].tag.POS == 'NOUN' and self.analyzer.parse(dictionary_word)[0].score > 0.45):
+                if(dis < minimum and dis < min(len(dictionary_word), len(normalized_word)) / 2):
+                    is_noun = False
+                    for tags in self.analyzer.parse(dictionary_word):
+                        if(tags.tag.POS == 'NOUN' and tags.score >= 0.125):
+                            is_noun = True
+                            break
+                    if(is_noun):
                         minimum = dis
                         saved_word = dictionary_word
         
@@ -151,11 +157,17 @@ class SlotFillerWithRules(NormalizingSlotFiller):
             if(word in words_i):
                 parsed['Attributes'] = parsed['Attributes'].replace(word, '')
         #parsed['Item'] = parsed['Item'][:-1]
+        if(len(parsed['Item']) == 0):
+            return parsed
         while parsed['Item'][0] == ' ':
             parsed['Item'] = parsed['Item'][1:]
+            if(len(parsed['Item']) == 0):
+                return parsed
         while parsed['Item'][-1] == ' ':
             parsed['Item'] = parsed['Item'][:-1]
-        
+            if(len(parsed['Item']) == 0):
+                return parsed
+         
         return parsed
     @overrides
     def fill(self, text: str, intent: str) -> t.Dict[str, t.Any]:
@@ -192,4 +204,4 @@ class SlotFillerWithRules(NormalizingSlotFiller):
         return form
 
 
-t
+
