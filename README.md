@@ -342,3 +342,9 @@ pip install -r requirements.txt
 ```[bash]
 python -m offer_search
 ```
+
+(опционально) чтобы удалить созданный индекс
+
+```[bash]
+curl -XDELETE localhost:9200/offer_search
+```
