@@ -45,7 +45,7 @@ class Searcher:
                 form['Attributes'] = text
         form['Offer_type_from'] = form['Offer_type']
         form['Offer_type_to'] = form['Offer_type']
-        is_cb = 0 == form['Offer_type'] and 0 > form['Cashback']
+        is_cb = 0 == form['Offer_type'] and form['Cashback'] > 0
         is_in = 1 == form['Offer_type']
 
         print(f'Slots:\t{json.dumps(form, ensure_ascii=False, indent=2)}')
