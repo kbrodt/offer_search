@@ -17,7 +17,7 @@ from overrides import overrides
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import LabelEncoder
 
-from offer_search.intent_classification.standard.intent_classifier import ClassificationModel
+from offer_search.core.intent_classification.standard.intent_classifier import ClassificationModel
 
 
 __all__ = [

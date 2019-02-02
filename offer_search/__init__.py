@@ -14,6 +14,7 @@ import logging
 import typing as t
 
 from offer_search.config import CONFIGURATION
+from offer_search.core.searcher import Searcher
 from offer_search.utils.logger import setup_logging
 from offer_search.web import HttpServer
 
@@ -24,6 +25,10 @@ __all__ = [
 
 
 logger = logging.getLogger(__name__)
+
+
+def __create_searcher() -> Searcher:
+    return Searcher(create_intent_classifier(), create_slot_filler(), create_ranker())
 
 
 def start_service() -> t.NoReturn:

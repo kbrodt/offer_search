@@ -15,17 +15,17 @@ from pathlib import Path
 
 from overrides import overrides
 
-from offer_search.intent_classification import IntentClassifier
-from offer_search.intent_classification.standard import CompositeVectorizer
-from offer_search.intent_classification.standard import LogisticRegressionModel
-from offer_search.intent_classification.standard import Preprocessor
-from offer_search.intent_classification.standard import StandardIntentClassifier
-from offer_search.intent_classification.standard import TfidfVectorizer
-from offer_search.searcher import Searcher
-from offer_search.slot_filling import SlotFiller
-from offer_search.slot_filling.slot_filling import SlotFillerWithRules
-from offer_search.ranking import Ranker
-from offer_search.ranking.elasticsearch import ElasticsearchRanker
+from offer_search.core.intent_classification import IntentClassifier
+from offer_search.core.intent_classification.standard import CompositeVectorizer
+from offer_search.core.intent_classification.standard import LogisticRegressionModel
+from offer_search.core.intent_classification.standard import Preprocessor
+from offer_search.core.intent_classification.standard import StandardIntentClassifier
+from offer_search.core.intent_classification.standard import TfidfVectorizer
+from offer_search.core.searcher import Searcher
+from offer_search.core.slot_filling import SlotFiller
+from offer_search.core.slot_filling.slot_filling import SlotFillerWithRules
+from offer_search.core.ranking import Ranker
+from offer_search.core.ranking.elasticsearch import ElasticsearchRanker
 
 
 def create_intent_classifier() -> IntentClassifier:

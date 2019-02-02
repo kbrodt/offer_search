@@ -9,9 +9,9 @@
 #  GitHub: @ameyuuno
 #
 
-from offer_search.ranking.base import Ranker
+from offer_search.core.slot_filling.base import SlotFiller
 
 
 __all__ = [
-    'Ranker',
+    'SlotFiller',
 ]

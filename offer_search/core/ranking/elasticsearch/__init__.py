@@ -9,7 +9,7 @@
 #  GitHub: @ameyuuno
 #
 
-from offer_search.ranking.elasticsearch.ranker import ElasticsearchRanker
+from offer_search.core.ranking.elasticsearch.ranker import ElasticsearchRanker
 
 
 __all__ = [

@@ -9,7 +9,7 @@
 #  GitHub: @ameyuuno
 #
 
-from offer_search.intent_classification.base import IntentClassifier
+from offer_search.core.intent_classification.base import IntentClassifier
 
 
 __all__ = [

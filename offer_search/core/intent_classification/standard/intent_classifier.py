@@ -14,7 +14,7 @@ import abc
 import numpy as np
 from overrides import overrides
 
-from offer_search.intent_classification.base import IntentClassifier
+from offer_search.core.intent_classification.base import IntentClassifier
 from offer_search.utils.processing.text import TextProcessor
 
 

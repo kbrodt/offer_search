@@ -13,9 +13,9 @@ import itertools as it
 import json
 import typing as t
 
-from offer_search.intent_classification import IntentClassifier
-from offer_search.slot_filling import SlotFiller
-from offer_search.ranking import Ranker
+from offer_search.core.intent_classification import IntentClassifier
+from offer_search.core.slot_filling import SlotFiller
+from offer_search.core.ranking import Ranker
 
 
 __all__ = [

@@ -17,7 +17,7 @@ import tqdm
 from elasticsearch import Elasticsearch
 from overrides import overrides
 
-from offer_search.ranking.base import Ranker
+from offer_search.core.ranking.base import Ranker
 
 
 __all__ = [
