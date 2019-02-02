@@ -152,10 +152,16 @@ class SlotFillerWithRules(NormalizingSlotFiller):
             for dictionary_word in self.dict['goods']:
                 dis = self.leveinstein_distance(normalized_word, dictionary_word)
                 if(dis < minimum and dis < min(len(dictionary_word), len(normalized_word)) / 2):
+                    if(dis == 0):
+                        max_word = dictionary_word
+                        is_noun = False
+                        for tags in self.analyzer.parse(dictionary_word):
+                            if(tags.tag.POS == 'NOUN'):
+                                is_noun = True
+                                break
+                        break
                     for tags in self.analyzer.parse(dictionary_word):
                         if(tags.score > maximum):
-                            maximum = tags.score
-                            print(dictionary_word, maximum)
                             if(tags.tag.POS == 'NOUN'):
                                 is_noun = True
                                 max_word = dictionary_word
