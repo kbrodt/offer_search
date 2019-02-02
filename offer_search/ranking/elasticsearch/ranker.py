@@ -167,7 +167,7 @@ class ElasticsearchRanker(Ranker):
                 (cls.__KEYS_TO_SET_ATTRIBUTES, search_form['Attributes']),
                 (cls.__KEYS_TO_SET_PRICE_FROM, search_form['Price_from']),
                 (cls.__KEYS_TO_SET_PRICE_TO, search_form['Price_to']),
-                (cls.__KEYS_TO_SET_CASHBACK, min(search_form['Cashback'], 0)),
+                (cls.__KEYS_TO_SET_CASHBACK, search_form['Cashback']),
             ):
                 cls.__set_query_value(search_query, query_keys, query_value)
         else:
@@ -177,7 +177,7 @@ class ElasticsearchRanker(Ranker):
                 (cls.__KEYS_TO_SET_ATTRIBUTES, search_form['Attributes']),
                 (cls.__KEYS_TO_SET_PRICE_FROM, search_form['Price_from']),
                 (cls.__KEYS_TO_SET_PRICE_TO, search_form['Price_to']),
-                (cls.__KEYS_TO_SET_CASHBACK, min(search_form['Cashback'], 0)),
+                (cls.__KEYS_TO_SET_CASHBACK, search_form['Cashback']),
             ):
                 cls.__set_query_value(search_query, query_keys, query_value)
 
