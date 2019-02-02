@@ -45,17 +45,15 @@ class Searcher:
                 form['Attributes'] = text
         form['Offer_type_from'] = form['Offer_type']
         form['Offer_type_to'] = form['Offer_type']
-        is_cb = 0 == form['Offer_type'] and form['Cashback'] > 0
-        is_in = 1 == form['Offer_type']
 
         print(f'Slots:\t{json.dumps(form, ensure_ascii=False, indent=2)}')
 
-        if is_cb:
+        if 0 == form['Offer_type'] and form['Cashback'] > 0:
             ranking = self.__ranker.rank(form)
             if 0 == len(ranking):
                 form['Cashback'] = 0
                 ranking = self.__ranker.rank(form)
-        elif is_in:
+        elif 1 == form['Offer_type']:
             ranking = self.__ranker.rank(form)
         else:
             form['Offer_type_from'] = 0
