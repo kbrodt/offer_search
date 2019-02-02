@@ -47,6 +47,9 @@ class Searcher:
         print(f'Slots:\t{json.dumps(form, ensure_ascii=False, indent=2)}')
 
         ranking = self.__ranker.rank(form)
+        if form['Cashback'] > 0 and 0 == len(ranking):
+            form['Cashback'] = 0
+            ranking = self.__ranker.rank(form)
 
         offers = self.__group_product_ranking_by_offer(ranking)
 
@@ -85,7 +88,7 @@ class Searcher:
                     'advert_text': advert_text,
                 },
                 'products': list(products)[:n_top],  # here we can return shorten information about the 
-                                                     # products or only links to them
+                                                        # products or only links to them
             })
 
         return offers
