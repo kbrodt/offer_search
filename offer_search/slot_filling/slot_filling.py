@@ -192,6 +192,9 @@ class SlotFillerWithRules(NormalizingSlotFiller):
             parsed['Item'] = parsed['Item'][:-1]
             if(len(parsed['Item']) == 0):
                 return parsed
+
+        parsed['Item'] = parsed['Item'].strip()
+        parsed['Attributes'] = parsed['Attributes'].strip()
          
         return parsed
     @overrides
