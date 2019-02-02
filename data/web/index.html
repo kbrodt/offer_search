@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Найдем лучшее спецпредложение от банка Tinkoff!">
+
+    <title>Поиск по спецпредложениям от Tinkoff банк</title>
+
+    <link href="assets/css/app.min.css" rel="stylesheet">
+    <link href="assets/css/custom.css" rel="stylesheet">
+
+    <link href='http://fonts.googleapis.com/css?family=Oswald:100,300,400,500,600,800%7COpen+Sans:300,400,500,600,700,800%7CMontserrat:400,700' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  </head>
+
+  <body class="nav-on-header">
+    <nav class="navbar">
+      <div class="container">
+        <div class="pull-left">
+          <a class="navbar-toggle" href="#" data-toggle="offcanvas"><i class="ti-menu"></i></a>
+          <div class="logo-wrapper">
+            <a class="logo" href="index.html"><img src="assets/img/Tinkoff-bank.png" alt="logo"></a>
+            <a class="logo-alt" href="index.html"><img src="assets/img/Tinkoff-bank.png" alt="logo-alt"></a>
+          </div>
+
+        </div>
+
+        <!-- Аккаунт -->
+        <div class="pull-right">
+
+          <div class="dropdown user-account">
+            <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+              <img src="assets/img/1200x630wa.png" alt="avatar">
+            </a>
+
+            <ul class="dropdown-menu dropdown-menu-right">
+              <li><a href="login.html">Авторизация</a></li>
+              <li><a href="register.html">Регистрация</a></li>
+              <li><a href="forget-pass.html">Забыли пароль?</a></li>
+            </ul>
+          </div>
+
+        </div>
+
+        <ul class="nav-menu">
+          <li>
+            <a class="active" href="index.html">Домашняя</a>
+            <ul>
+				<li><a href="https://www.tinkoff.ru">Банк Tinkoff</a></li>
+				<li><a class="active" href="https://play.google.com/store/apps/details?id=com.idamob.tinkoff.android&hl=ru">Google Play</a></li>
+            </ul>
+          </li>
+          <li>
+            <a href="#">Страница</a>
+            <ul>
+              <li><a href="#last-item">Последнии предложения</a></li>
+              <li><a href="#how_it_work">Как это все работает</a></li>
+              <li><a href="#popular_items">Популярные предложения</a></li>
+              <li><a href="#footer_site">О сайте</a></li>
+            </ul>
+          </li>
+        </ul>
+
+      </div>
+    </nav>
+    <header class="site-header size-lg text-center" style="background-image: url(assets/img/pexels-photo-144230.jpeg)">
+      <div class="container">
+        <div class="col-xs-12">
+          <br><br>
+          <h2>Лучший кэшбэк для Вас среди <mark>50,000</mark> товаров прямо сейчас!</h2>
+          <h5 class="font-alt">Найдите товар за одну минуту</h5>
+          <br><br><br>
+          <form class="header-job-search">
+            <div class="input-keyword" style='width: 77%'>
+              <input id='search_input' type="text" class="form-control" placeholder="Где купить велосипед за 30к?">
+            </div>
+
+            <div class="btn-search">
+              <button class="btn btn-primary" type="button" id='search_button'>Найти</button>
+              <!-- <a href="">Список предложений</a> -->
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </header>
+    <main>
+      <section class="bg-alt" id='last-item'>
+        <div class="container">
+          <header class="section-header">
+            <span>Новое</span>
+            <h2>Последнии предложения</h2>
+            <p>Вот последнии предложений</p>
+          </header>
+
+          <div id='all_items_block' class="row item-blocks-condensed">
+            <!--<div class="col-xs-12">
+              <a class="item-block">
+                <header>
+                  <img src="assets/img/Tinkoff-bank.png" alt="">
+                  <div class="hgroup">
+                    <h4>Купить велик</h4>
+                    <h5>bro-bike</h5>
+                  </div>
+                  <div class="header-meta">
+                    <span class="location">КБ 30%</span>
+                    <span class="label label-success">6 месяцев</span>
+                  </div>
+                </header>
+              </a>
+            </div>-->
+          </div>
+          <br><br>
+          <p class="text-center"><a class="btn btn-info" href="item-list.html">Показать все предложения</a></p>
+        </div>
+      </section>
+      <section id='how_it_work'>
+        <div class="container">
+          <div class="col-sm-12 col-md-6 hidden-xs hidden-sm">
+            <br>
+            <img class="center-block" src="assets/img/Teaser_2.jpg" alt="how it works">
+          </div>
+          <div class="col-sm-12 col-md-6">
+            <header class="section-header text-left">
+              <span>Описание</span>
+              <h2>Как это все работает</h2>
+            </header>
+            <p class="lead">Мы договариваемся с магазинами, чтобы они делали Вам скидки.</p>
+            <p>Среди всего множества товара с помощью машинного обучения, мы находим только те предложения, которые полностью удовлетворяют Вашим запросам.</p>
+            <br><br>
+            <a class="btn btn-primary" href="https://github.com/kbrodt/offer_search/blob/master/README.md">Подробнее</a>
+          </div>
+
+        </div>
+      </section>
+      <section class="bg-alt" id='popular_items'>
+        <div class="container">
+          <header class="section-header">
+            <span>Категории</span>
+            <h2>Популярные предложения</h2>
+            <p>Вот самые популярные предложения</p>
+          </header>
+
+          <div class="category-grid">
+            <a>
+              <i class="fa fa-laptop"></i>
+              <h6>Спорт</h6>
+              <p>Спорт инвентарь, пищевые добавки, спортивная еда для животных!</p>
+            </a>
+
+            <a>
+              <i class="fa fa-line-chart"></i>
+              <h6>Еда</h6>
+              <p>Вы можете найти раазличные товары от заморских продуктов до сельдерея среди таких огромных магазинов, как Ашан!</p>
+            </a>
+			
+            <a>
+              <i class="fa fa-line-chart"></i>
+              <h6>В разработке</h6>
+              <p>Мы ожидаем пополнение раздела категорий!</p>
+            </a>
+          </div>
+
+          <p class="text-center"><a class="btn btn-info" href="">Просмотреть все категории</a></p>
+
+        </div>
+      </section>
+      <section class="bg-img text-center" style="background-image: url(assets/img/translate_checklist.jpg)" id='footer_site'>
+        <div class="container">
+          <h2><strong>Подписывайтесь</strong></h2>
+          <h6 class="font-alt">Получайте новые предложения каждую неделю</h6>
+          <br><br>
+          <form class="form-subscribe" action="#">
+            <div class="input-group">
+              <input type="text" class="form-control input-lg" placeholder="Ваша электронная почта">
+              <span class="input-group-btn">
+                <button class="btn btn-success btn-lg" type="submit">Подписаться</button>
+              </span>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12 col-md-6">
+            <h6>О нас</h6>
+            <p class="text-justify">Мы участники зимней IT-школы и безмерно рады предоставить Вам данный веб-сервис.</p>
+          </div>
+
+          <div class="col-xs-6 col-md-3">
+            <h6>Компания</h6>
+            <ul class="footer-links">
+              <li><a href="page-about.html">О нас</a></li>
+              <li><a href="page-faq.html">Тех. поддержка</a></li>
+              <li><a href="page-contact.html">Связаться с нами</a></li>
+            </ul>
+          </div>
+
+          <div class="col-xs-6 col-md-3">
+            <h6>Вакансии</h6>
+            <ul class="footer-links">
+              <li><a href="job-list.html">Разработчик под Android</a></li>
+              <li><a href="job-list.html">Разработчик под iOS</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <hr>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 col-sm-6 col-xs-12">
+            <p class="copyright-text">Copyrights &copy; 2019 All Rights Reserved by Tinkoff.</p>
+          </div>
+
+          <div class="col-md-4 col-sm-6 col-xs-12">
+            <ul class="social-icons">
+              <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+              <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+              <li><a class="dribbble" href="#"><i class="fa fa-dribbble"></i></a></li>
+              <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
+              <li><a class="instagram" href="#"><i class="fa fa-instagram"></i></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <a id="scroll-up" href="#"><i class="ti-angle-up"></i></a>
+	<script src="assets/js/jquery-ui.min.js"></script>
+    <script src="assets/js/app.min.js"></script>
+    <script src="assets/js/custom.js"></script>
+  </body>
+</html>
