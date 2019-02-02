@@ -82,7 +82,7 @@ MEANING = rule(
         )
     )
 )
-TRUE =rule(
+TRUE = rule(
     true
 )
 ATTRIBUTE = rule(
@@ -160,4 +160,14 @@ PERCENT_RULE = rule(
 MONEY_RULE = rule(
     NUMBER_RULE.repeatable(),
     MONEY_PIPE.optional()
+)
+
+INSTALLMENT_PIPE = morph_pipeline([
+    "в рассрочку",
+    "рассрочка",
+    "в кредит",
+    "кредит"
+])
+IS_INSTALLMENT = rule(
+    INSTALLMENT_PIPE
 )

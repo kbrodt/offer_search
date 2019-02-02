@@ -45,7 +45,15 @@ class SlotFillerWithRules(NormalizingSlotFiller):
         return string
     def parsing(self, string):
         parsed = dict()
-       
+        parsed['Offer_type'] = 0
+        #FIND INSTALLMENT
+        erased_string = ""
+        parser = Parser(IS_INSTALLMENT)
+        for match in parser.findall(string):
+            parsed['Offer_type'] = 1
+            for token in match.tokens:
+                erased_string = ' ' + erased_string.replace(" " + token.value + " ", " ") + ' '
+        string = erased_string
         #FIND CASHBACK as %
         parsed['Cashback'] = "NaN"
         parser = Parser(PERCENT_RULE)
@@ -202,6 +210,5 @@ class SlotFillerWithRules(NormalizingSlotFiller):
         else:
             form['Cashback'] = int(form['Cashback'])
         return form
-
 
 
