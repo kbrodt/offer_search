@@ -15,17 +15,18 @@ from pathlib import Path
 
 from overrides import overrides
 
-from offer_search.core import create_intent_classifier
-from offer_search.core import create_ranker
-from offer_search.core import create_slot_filler
-from offer_search.core.searcher import Searcher
+from offer_search import core
 
 
 def main() -> t.NoReturn:
     """Entrypoint
     """
 
-    searcher = Searcher(create_intent_classifier(), create_slot_filler(), create_ranker())
+    searcher = core.Searcher(
+        core.create_intent_classifier(), 
+        core.create_slot_filler(), 
+        core.create_ranker(),
+    )
 
     while True:
         search_request = input("search => ")
