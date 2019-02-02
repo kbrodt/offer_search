@@ -13,7 +13,7 @@
 - **WEB** - веб-сайт организации
 - **CASH_BACK_HEIGHT** - кешбэк в процентах (если значение больше 100, то в рублях)
 - **TRANCHE_STMT_COUNT** - длина рассрочки в месяцах
-- **OFFER_TYPE** - тип спецпредложения (*STANDART* - кешбэк и *SPECIAL_CREDIT* - рассрочка)
+- **OFFER_TYPE** - тип спецпредложения (*STANDARD* - кешбэк и *SPECIAL_CREDIT* - рассрочка)
 - **ADVERT_TEXT** - описание спецпредложения
 
 В файле [`offers_with_categories`](./data/offers_with_categories.xlsx):
@@ -22,7 +22,7 @@
 - **NAME** - название организации, предоставляющее спецпредложение
 - **CASH_BACK_HEIGHT** - кешбэк в процентах (если значение больше 100, то в рублях)
 - **TRANCHE_STMT_COUNT** - длина рассрочки в месяцах
-- **OFFER_TYPE** - тип спецпредложения (*STANDART* или *SPECIAL_CREDIT*)
+- **OFFER_TYPE** - тип спецпредложения (*STANDARD* или *SPECIAL_CREDIT*)
 - **ADVERT_TEXT** - описание спецпредложения
 - **CATEGORY_NAME** - категория спецпредложения
 
