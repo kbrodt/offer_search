@@ -376,7 +376,11 @@ source vos/bin/activate
 pip install -r requirements.txt
 ```
 
+<<<<<<< HEAD
 ## Использование
+=======
+### Использование
+>>>>>>> 571fc7b9dda00da588e710b926d2d8ac31bdf040
 
 ```[bash]
 python -m offer_search
