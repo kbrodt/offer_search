@@ -45,7 +45,15 @@ class SlotFillerWithRules(NormalizingSlotFiller):
         return string
     def parsing(self, string):
         parsed = dict()
-       
+        parsed['Offer_type'] = 0
+        #FIND INSTALLMENT
+        erased_string = ""
+        parser = Parser(IS_INSTALLMENT)
+        for match in parser.findall(string):
+            parsed['Offer_type'] = 1
+            for token in match.tokens:
+                erased_string = ' ' + erased_string.replace(" " + token.value + " ", " ") + ' '
+        string = erased_string
         #FIND CASHBACK as %
         parsed['Cashback'] = "NaN"
         parser = Parser(PERCENT_RULE)
@@ -204,4 +212,12 @@ class SlotFillerWithRules(NormalizingSlotFiller):
         return form
 
 
-
+text = "хочу вкусные суши в кредит"
+analyzer = pmh.MorphAnalyzer()
+#print(analyzer.parse(text)[0].score, analyzer.parse(text)[1].score)
+parser = Parser(ATTRIBUTE)
+#for match in parser.findall(text):
+#    for _ in match.tokens:
+#        print(_.span.start)
+sf = SlotFillerWithRules()
+print(sf.fill(text, "food"))
