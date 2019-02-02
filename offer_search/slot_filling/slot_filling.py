@@ -54,18 +54,8 @@ class SlotFillerWithRules(NormalizingSlotFiller):
             for token in match.tokens:
                 erased_string = ' ' + erased_string.replace(" " + token.value + " ", " ") + ' '
         string = erased_string
-        #FIND CASHBACK as %
+        
         parsed['Cashback'] = "NaN"
-        parser = Parser(PERCENT_RULE)
-        percent_tokens = parser.findall(string)
-        for match in percent_tokens:
-            cashback = ' '.join([_.value for _ in match.tokens])
-            #выбираем только числа без слов и знака %
-            parser = Parser(NUMBER_RULE)
-            for number_match in parser.findall(cashback):
-                parsed['Cashback'] = ' '.join([_.value for _ in number_match.tokens])
-            for token in match.tokens:
-                string = string.replace(" " + token.value + " ", " ")    
         #find cashback with word 'cashback'
         cashback_rules = [CASHBACK_AFTER, CASHBACK_BEFORE]
         erased_string = string
@@ -99,6 +89,18 @@ class SlotFillerWithRules(NormalizingSlotFiller):
                 parsed['Cashback'] = cashback.replace(" ", "")
                 break
         string = erased_string.replace('[', '').replace(']', '')
+        
+        #FIND CASHBACK as %
+        parser = Parser(PERCENT_RULE)
+        percent_tokens = parser.findall(string)
+        for match in percent_tokens:
+            cashback = ' '.join([_.value for _ in match.tokens])
+            #выбираем только числа без слов и знака %
+            parser = Parser(NUMBER_RULE)
+            for number_match in parser.findall(cashback):
+                parsed['Cashback'] = ' '.join([_.value for _ in number_match.tokens])
+            for token in match.tokens:
+                string = string.replace(" " + token.value + " ", " ")
         
         #find
         parsed['Price_from'] = parsed['Price_to'] = 'NaN'
@@ -223,5 +225,9 @@ class SlotFillerWithRules(NormalizingSlotFiller):
         if(form['Cashback'] == '' or form['Cashback'] == 'NaN'):
             form['Cashback'] = 0
         else:
-            form['Cashback'] = int(form['Cashback'])
+            cb_numbers = ""
+            for sym in form['Cashback']:
+                if(ord(sym) >= 48 and ord(sym) <= 57):
+                    cb_numbers += sym
+            form['Cashback'] = int(cb_numbers)
         return form
