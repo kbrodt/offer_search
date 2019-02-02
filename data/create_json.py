@@ -8,6 +8,8 @@ path_sport = './sport'
 all_files_food = os.listdir(path_food)
 all_files_sport = os.listdir(path_sport)
 
+offer_type_to_int = {'STANDARD': 0, 'SPECIAL_CREDIT': 1}
+
 
 def create_json(path):
     data = pd.read_excel(os.path.join(path, 'data_cleaned.xls'))
@@ -23,7 +25,7 @@ def create_json(path):
                 'Web': row_meta[1],
                 'Cashback': 0 if row_meta[2] != row_meta[2] else int(row_meta[2]),
                 'Period': 0 if row_meta[3] != row_meta[3] else int(row_meta[3]),
-                'Offer_type': '' if row_meta[4] != row_meta[4] else row_meta[4],
+                'Offer_type': offer_type_to_int[row_meta[4]],
                 'Advert_text': '' if row_meta[5] != row_meta[5] else row_meta[5].lower()
             }
             all_json.append(new_json)
