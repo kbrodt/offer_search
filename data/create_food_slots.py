@@ -81,7 +81,7 @@ data['Название'].apply(process_abrikos)
 
 end_slots = set()
 end_slots = [slot.replace('"','').replace(',','') for slot in slots]
-end_slots = [slot.strip() for slot in end_slots if len(slot.strip()) >0]
+end_slots = sorted([slot.strip() for slot in end_slots if len(slot.strip()) >0])
 
 save_slots = pd.Series(end_slots)
 save_slots.to_csv('./food/slots.csv', index=False, header=False)
