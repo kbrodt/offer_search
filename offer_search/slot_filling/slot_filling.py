@@ -212,12 +212,3 @@ class SlotFillerWithRules(NormalizingSlotFiller):
         return form
 
 
-text = "хочу вкусные суши в кредит"
-analyzer = pmh.MorphAnalyzer()
-#print(analyzer.parse(text)[0].score, analyzer.parse(text)[1].score)
-parser = Parser(ATTRIBUTE)
-#for match in parser.findall(text):
-#    for _ in match.tokens:
-#        print(_.span.start)
-sf = SlotFillerWithRules()
-print(sf.fill(text, "food"))
