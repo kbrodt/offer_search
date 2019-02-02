@@ -146,17 +146,26 @@ class SlotFillerWithRules(NormalizingSlotFiller):
             normalized_word = word
             saved_word = ""
             minimum = len(normalized_word)
+            maximum = 0
+            max_word = ""
+            is_noun = False
             for dictionary_word in self.dict['goods']:
                 dis = self.leveinstein_distance(normalized_word, dictionary_word)
                 if(dis < minimum and dis < min(len(dictionary_word), len(normalized_word)) / 2):
-                    is_noun = False
                     for tags in self.analyzer.parse(dictionary_word):
-                        if(tags.tag.POS == 'NOUN' and tags.score >= 0.125):
-                            is_noun = True
-                            break
-                    if(is_noun):
-                        minimum = dis
-                        saved_word = dictionary_word
+                        if(tags.score > maximum):
+                            maximum = tags.score
+                            print(dictionary_word, maximum)
+                            if(tags.tag.POS == 'NOUN'):
+                                is_noun = True
+                                max_word = dictionary_word
+                            else:
+                                is_noun = False
+                                max_word = ""
+                            
+            if(is_noun):
+                minimum = dis
+                saved_word = max_word
         
             parsed['Item'] += saved_word + ' '
         words_a = parsed['Attributes'].split(' ')
@@ -210,6 +219,5 @@ class SlotFillerWithRules(NormalizingSlotFiller):
         else:
             form['Cashback'] = int(form['Cashback'])
         return form
-
 
 
