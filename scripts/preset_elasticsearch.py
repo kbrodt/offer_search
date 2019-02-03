@@ -40,7 +40,7 @@ def preset(
         mininterval=1,
         leave=False,
     ):
-        self.__elasticsearch.index(index, doc_type, body=record)
+        self.__elasticsearch.index(index=index, doc_type=doc_type, body=record)
 
 
 def main(preset_path: Path) -> t.NoReturn:
