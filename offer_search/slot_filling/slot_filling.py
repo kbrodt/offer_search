@@ -4,6 +4,7 @@ from .yargy_rules import *
 from overrides import overrides
 import typing as t
 import pymorphy2 as pmh
+import re
 
 money_value = {
     "k" : 1000,
@@ -42,6 +43,8 @@ class SlotFillerWithRules(NormalizingSlotFiller):
         string = string.lower()
         string = ' '.join(self.analyzer.parse(token.value)[0].normal_form for token in self.tokenizer(string))
         string = " " + string + " "
+        reg = re.compile('[^a-zA-Z0-9 ]')
+        string = reg.sub('', string)
         return string
     def parsing(self, string):
         parsed = dict()
