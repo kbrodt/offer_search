@@ -22,7 +22,7 @@ services:
     networks:
       - comptech2019-offer-search-network
     ports:
-      - 10000:8080
+      - 8446:8080
     environment:
       - LOGGING_LEVEL=DEBUG
       - RANKER_ELASTICSEARCH_HOST=elasticsearch
