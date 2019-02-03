@@ -237,7 +237,3 @@ class SlotFillerWithRules(NormalizingSlotFiller):
                     cb_numbers += sym
             form['Cashback'] = int(cb_numbers)
         return form
-
-text = "купить горный велосипед от 20к до 60000"
-sf = SlotFillerWithRules()
-print(sf.fill(text, "sport"))
