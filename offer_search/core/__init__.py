@@ -61,7 +61,7 @@ def create_slot_filler() -> SlotFiller:
 def create_ranker(
     elasticsearch_host: str = 'localhost',
     elasticsearch_port: int = 9200,
-    preset_path: t.Optional[Path] = None,
+    preset_path: t.Optional[Path] = Path('./resources/ranking/preset_small.json'),
 ) -> Ranker:
     preset = None
 
