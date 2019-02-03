@@ -30,6 +30,7 @@ def connect_elasticsearch(es_host: str = 'localhost', es_port: int = 9200) -> El
 
 
 def preset(
+    elasticsearch: Elasticsearch,
     preset: t.List[t.Dict[str, t.Any]],
     index: str = DEFAULT_INDEX,
     doc_type: str = DEFAULT_DOC_TYPE,
@@ -40,14 +41,14 @@ def preset(
         mininterval=1,
         leave=False,
     ):
-        self.__elasticsearch.index(index=index, doc_type=doc_type, body=record)
+        elasticsearch.index(index=index, doc_type=doc_type, body=record)
 
 
 def main(preset_path: Path) -> t.NoReturn:
     es = connect_elasticsearch()
 
     with preset_path.open('r') as preset_file:
-        preset(json.load(preset_file))
+        preset(es, json.load(preset_file))
 
 if __name__ == '__main__':
     main(Path(sys.argv[1]))
