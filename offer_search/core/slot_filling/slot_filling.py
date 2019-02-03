@@ -43,8 +43,9 @@ class SlotFillerWithRules(NormalizingSlotFiller):
         string = string.lower()
         string = ' '.join(self.analyzer.parse(token.value)[0].normal_form for token in self.tokenizer(string))
         string = " " + string + " "
-        reg = re.compile('[^a-zA-Z0-9 ]')
-        string = reg.sub('', string)
+        reg = re.compile('[\W_ ]+')
+        string = reg.sub(' ', string)
+        print(string)
         return string
     def parsing(self, string):
         parsed = dict()
@@ -198,7 +199,6 @@ class SlotFillerWithRules(NormalizingSlotFiller):
 
         parsed['Item'] = parsed['Item'].strip()
         parsed['Attributes'] = parsed['Attributes'].strip()
-         
         return parsed
     @overrides
     def fill(self, text: str, intent: str) -> t.Dict[str, t.Any]:
@@ -237,3 +237,7 @@ class SlotFillerWithRules(NormalizingSlotFiller):
                     cb_numbers += sym
             form['Cashback'] = int(cb_numbers)
         return form
+
+text = "купить горный велосипед от 20к до 60000"
+sf = SlotFillerWithRules()
+print(sf.fill(text, "sport"))
