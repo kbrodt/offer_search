@@ -21,7 +21,7 @@ __all__ = [
 ]
 
 
-__DEFAULT_LOG_TEMPLATE = '[%(asctime)-23s] %(name)-80s %(filename)35s:%(lineno)-10d ' \
+__DEFAULT_LOG_TEMPLATE = '[%(asctime)-23s] %(name)-40s %(filename)35s:%(lineno)-10d ' \
                          '%(levelname)-8s %(message)s'
 
 
