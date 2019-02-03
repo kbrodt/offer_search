@@ -12,7 +12,6 @@
 import typing as t
 from copy import deepcopy
 from operator import itemgetter
-import tqdm
 
 from elasticsearch import Elasticsearch
 from overrides import overrides
@@ -146,11 +145,8 @@ class ElasticsearchRanker(Ranker):
 
         return [record['_source'] for record in search_result['hits']['hits']]
 
-    def __preset(self, preset: t.List[t.Dict[str, t.Any]]) -> None:
-        for record in tqdm.tqdm(preset,
-                                desc='[ Indexing.. ]',
-                                mininterval=1,
-                                leave=False):
+    def __preset(self, preset: t.List[t.Dict[str, t.Any]]) -> t.NoReturn:
+        for record in preset:
             self.__elasticsearch.index(
                 index=self.__index, 
                 doc_type=self.__doc_type, 
