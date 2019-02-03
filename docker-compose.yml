@@ -3,7 +3,30 @@ version: '3'
 services:
   elasticsearch:
     image: elasticsearch:5.6.14-alpine
+    container_name: comptech2019-offer-search-elasticsearch
+    networks:
+      - comptech2019-offer-search-network
     ports:
       - 9200:9200
+    # volumes:
+      # - ./var/elasticsearch/data/:/usr/share/elasticsearch/data/
     environment:
       - discovery.type=single-node
+
+  web:
+    build: .
+    image: ameyuuno/comptech2019-offer-search:web
+    container_name: comptech2019-offer-search-web
+    depends_on:
+      - elasticsearch
+    networks:
+      - comptech2019-offer-search-network
+    ports:
+      - 8446:8080
+    environment:
+      - LOGGING_LEVEL=DEBUG
+      - RANKER_ELASTICSEARCH_HOST=elasticsearch
+
+networks:
+  comptech2019-offer-search-network:
+  
