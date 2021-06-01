@@ -28,7 +28,7 @@ singledispatch==3.4.0.3
 six==1.12.0
 tqdm==4.26.0
 typing-extensions==3.7.2
-urllib3==1.24.1
+urllib3==1.26.5
 xlrd==1.2.0
 yargy==0.12.0
 yarl==1.3.0
