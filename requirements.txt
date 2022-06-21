@@ -14,7 +14,7 @@ joblib==0.13.1
 MarkupSafe==1.1.0
 multidict==4.5.2
 nltk==3.4
-numpy==1.16.0
+numpy==1.22.0
 overrides==1.9
 pandas==0.24.0
 pymorphy2==0.8
